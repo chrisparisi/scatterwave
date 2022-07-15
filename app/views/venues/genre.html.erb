@@ -1,0 +1,148 @@
+<section class="py-5">
+  <div class="container">
+    <p class="subtitle text-primary">Add new Venue</p>
+    <h1 class="h2 mb-5"> Texts <span class="text-muted float-right">Step 5</span></h1>
+    <%= form_for @venue do |f| %>
+        <%= hidden_field_tag "is_genre", true %>
+        <div class="row form-block">
+          <div class="col-lg-4">
+            <h4>Genre</h4>
+            <p class="text-muted text-sm"> Samsa was a travelling salesman - and above it there hung a picture that he
+              had recently cut out of an illustrated magazine and housed in a nice, gilded frame.</p>
+          </div>
+          <div class="col-lg-7 ml-auto">
+            <div class="form-group">
+              <label class="form-label">Available Genre</label>
+              <ul class="list-inline mb-0">
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_alternative, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_alternative, "Alternative", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_americana, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_americana, "Americana", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_blues, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_blues, "Blues", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_christian, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_christian, "Christian", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_classical, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_classical, "Classical", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_comedy, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_comedy, "Comedy", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_country, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_country, "Country", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_edm, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_edm, "EDM", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_electronic, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_electronic, "Electronic", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_folk, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_folk, "Folk", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_hiphop, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_hiphop, "Hip Hop", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_jazz, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_jazz, "Jazz", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_latin, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_latin, "Latin", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_metal, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_metal, "Metal", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_pop, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_pop, "Pop", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_rb, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_rb, "R+B", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_rock, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_rock, "Rock", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_spokenword, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_spokenword, "Spoken Word", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_world, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_world, "World", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row form-block flex-column flex-sm-row">
+          <div class="col text-center text-sm-left">
+            <%= link_to photo_upload_venue_path, class: "btn btn-link text-muted" do %>
+                <i class="fa-chevron-left fa mr-2"></i>Back
+            <% end %>
+          </div>
+          <div class="col text-center text-sm-right">
+            <button class="btn btn-primary px-3" type="submit">Next step<i class="fa-chevron-right fa ml-2"></i>
+            </button>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</section>

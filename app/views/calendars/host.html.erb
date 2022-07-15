@@ -1,0 +1,165 @@
+<section class="py-5 calender_vanue">
+  <div class="container">
+    <label>Your Listings</label>
+    <div class="row">
+      <div class="col-md-6">
+        <% if !@venues.blank? %>
+            <%= search_form_for @search, class: 'form-group w-100', url: host_calendar_path do |f| %>
+                <div class="select">
+                  <div class="form-group">
+                    <%#= f.select :venue_id, options_for_select(@venues.collect {|u| [u.listing_name, u.id]}, params[:venue_id]), {}, {
+                      onchange: "$(this.form).submit()",
+                      class: "form-control"
+                  } %>
+                    <%= f.select :venue_id,options_for_select(@venues.collect {|u| [u.listing_name, u.id]}, params[:venue_id]),
+                                 {}, {:class => "selectpicker form-control",onchange: "$(this.form).submit()",
+                                      required: true} %>
+                  </div>
+                </div>
+                <%= f.hidden_field :date, id: "date", value: params[:date], onchange: "$(this.form).submit()" %>
+            <% end %>
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <%= text_field_tag :end_time, nil, class: "form-control time-fields", required: true %>
+      </div>
+    </div>
+    <%= render 'calendar_modal' %>
+    <div id="calendar" class="card p-4"></div>
+  </div>
+</section>
+<style>
+  .ui-timepicker-container{
+    z-index: 1051 !important;
+  }
+</style>
+<script>
+  window.bookings = <%= raw @events.to_json %>
+  window.days = <%= raw @days.to_json %>
+
+  function showBookings(data) {
+    return data.map(function (e) {
+
+      if (e.properties.start !== e.properties.start) {
+        e['date'] = moment.utc(e.properties.start).add(1, 'days')
+      }
+
+      return {
+        name: e.properties.name,
+        start: e.properties.start,
+        end: e.properties.end,
+        etype: "Booking"
+      }
+    })
+  }
+
+  function showDays(data) {
+      return data.map(function (e) {
+          if (e['day'] !== e['day']) {
+              e['day'] = moment.utc(e['day']).add(1, 'days')
+          }
+
+          return {
+              id: e.id,
+              name: e.status,
+              start: e['day'],
+              end: e['day'],
+              status: e.status,
+              etype: "Availability"
+          }
+      })
+  }
+
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'title',
+      center: '',
+      right: 'prev,next'
+    },
+    defaultDate: $('#date').val(),
+    events: $.merge(showDays(days), showBookings(bookings)),
+    eventRender: function(event, element, view) {
+      return $(`
+        <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end">
+          <div class="fc-content ${event.status}">
+            <span class="fc-title"> ${event.name}</span>
+          </div>
+        </a>
+      `);
+    },
+    eventClick: function(info) {
+      if (info.etype =="Availability"){
+          $.ajax({
+              type: "get",
+              dataType: 'script',
+              url: "/edit_calendar/"+info.id,
+              success: function(rst){
+
+              }
+          });
+      }
+    },
+    dayRender: function(date, cell) {
+      var dayInfo = $.grep(days, function(e) {
+        return e.day === date.format();
+      });
+
+      console.log(dayInfo);
+
+      <% if !@venues.blank? %>
+        if (dayInfo.length > 0) {
+          if (dayInfo[0].status == "Not_Available") {
+            cell.addClass('fc-past');
+          } else {
+            cell.append('<span class="day-payout">' + '$' + dayInfo[0].payout +'</span>')
+          }
+        } else {
+          cell.append('<span class="day-payout">' + '$<%= @venue.payout %>' + '</span>')
+        }
+      <% end %>
+
+    },
+    selectable: true,
+    select: function(start, end, jsEvent, view) {
+      var start_date = moment(start);
+      var end_date = moment(end).subtract(1, "days");
+
+      <% if @venues.blank? %>
+        $('#calendar').fullCalendar('unselect');
+      <% end %>
+
+      var overlap = bookings.filter(function(e) {
+      var r_date = moment(e.start_date);
+      var r_date = moment(e.end_date).subtract(1, "days");
+
+      return (r_date.isSameOrBefore(end_date) && r_date.isSameOrAfter(start_date))
+    }).length > 0;
+
+    if(start.isBefore(moment()) || overlap) {
+      $('#calendar').fullCalendar('unselect')
+    } else {
+      $('#new_calendar').modal('show');
+
+      $('#calendar_start_date').datepicker({
+          dateFormat: "yy-mm-dd",
+          setDate: start_date
+        });
+        $('#calendar_start_date').val(start_date.format("YYYY-MM-DD"));
+
+        $('#calendar_end_date').datepicker({
+          dateFormat: "yy-mm-dd",
+          setDate: end_date
+        });
+        $('#calendar_end_date').val(end_date.format("YYYY-MM-DD"));
+      }
+    }
+  });
+  $('.time-fields').timepicker({
+      startTime: '09:00:00'
+  });
+  $(document).on('cocoon:after-insert', '.add-time-slots', function(e, insertedItem) {
+      $('.time-fields').timepicker({
+          startTime: '09:00:00'
+      });
+  });
+</script>

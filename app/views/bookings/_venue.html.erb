@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-lg-3 align-self-center mb-4 mb-lg-0">
+    <div class="d-flex align-items-center mb-3">
+      <h2 class="h5 mb-0"><%= booking.band.user.fullname %></h2>
+      <%= link_to band_path(booking.band) do %>
+          <%= image_tag avatar_url(booking.band.user), class: "avatar avatar-sm avatar-border-white ml-3" %>
+      <% end %>
+    </div>
+    <p class="text-sm text-muted">
+      <%= link_to band_path(booking.band) do %>
+          <%= image_tag booking.band.cover_picture(:thumb), :size => '100x68' %>
+      <% end %>
+    </p>
+    <span class="badge badge-pill p-2 badge-primary-light">
+                          <%= link_to band_path(booking.band) do %>
+                              <%= booking.band.band_name %>
+                          <% end %>
+                        </span>
+  </div>
+  <div class="col-lg-9">
+    <div class="row">
+      <div class="col-6 col-md-6 col-lg-4 py-3 mb-3 mb-lg-0">
+        <h6 class="label-heading">Venue Name</h6>
+        <div class="d-flex align-items-center mb-3">
+          <div class="mb-0 mr-2 ">
+            <%= link_to venue_path(booking.venue) do %>
+                <%= image_tag booking.venue.cover_photo(:thumb), class: "avatar avatar-sm avatar-border-white" %>
+            <% end %>
+          </div>
+          <p class="text-sm font-weight-bold">
+            <%= link_to booking.venue.listing_name, venue_path(booking.venue) %>
+          </p>
+        </div>
+
+        <h6 class="label-heading">Band Name</h6>
+        <p class="text-sm font-weight-bold">
+          <%= link_to band_path(booking.band) do %>
+              <%= booking.band.band_name %>
+          <% end %>
+        </p>
+      </div>
+      <div class="col-6 col-md-2 col-lg-3 py-3">
+        <h6 class="label-heading">Booked Date</h6>
+        <p class="text-sm font-weight-bold"><%= booking.date.strftime('%v') %> </p>
+        <h6 class="label-heading">Status</h6>
+        <p class="text-sm font-weight-bold"><%= booking.status %></p>
+      </div>
+
+      <div class="col-12 col-lg-5 py-3">
+
+                            <span class="text-primary text-sm text-uppercase mr-4 mr-lg-0">
+                              <div class="mb-4">
+                                <%= render partial: "reviews/host_form", locals: {booking: booking} if booking.Approved? %>
+                              </div>
+                            </span>
+        <span class="text-muted text-uppercase">
+                              <div class="mb-4">
+                                <% if booking.date < Time.now && booking.Approved? && !booking.is_paid %>
+                                  <%= link_to mark_paid_booking_path(booking) do %>
+                                    <i class="fa fa-thumbs-up fa-lg">Pay Now</i>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                            </span>
+        <% if booking.status == 'Waiting' %>
+            <%= link_to approve_booking_path(booking), method: :post do %>
+                <p class="badge badge-pill badge-success-light text-center">
+                  <i class="fa fa-thumbs-up fa-lg"> Approve</i>
+                </p>
+            <% end %><br/>
+            <%= link_to decline_booking_path(booking), method: :post do %>
+                <p class="badge badge-pill badge-danger-light text-center">
+                  <i class="fa fa-thumbs-down fa-lg"> Decline</i>
+                </p>
+            <% end %>
+        <% end %>
+        <% if booking.status == 'Declined' %>
+            <p class="badge badge-pill badge-danger-light text-center"><%= booking.status %></p>
+        <% end %>
+        <% if booking.status == 'Approved' %>
+            <!--<p class="badge badge-pill badge-success-light text-center mb-2"><%#= booking.status %></p>-->
+            <% if booking.Approved? %>
+                <p class="badge badge-pill <%= booking.is_paid ? 'badge-success-light' : 'badge-danger-light' %> text-center">
+                  <%= booking.is_paid ? "<i class='fas fa-check mr-1'></i> Paid".html_safe : "<i class='fas fa-times mr-1'></i> UnPaid".html_safe %></p>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>

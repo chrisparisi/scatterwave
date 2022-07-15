@@ -1,0 +1,23 @@
+// Place all the styles related to the Band controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'variable';
+#toast-container > div {
+  opacity: 1!important;
+}
+
+.edit_band,.new_band,
+.calender_vanue,
+.edit_venue,.new_venue{
+  .bootstrap-select.form-control{
+    background: transparent;
+    .btn.dropdown-toggle{
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid
+      #ced4da;
+    }
+  }
+}
+

@@ -1,0 +1,3 @@
+$('#band_listing').html('<%= j render partial: "bands/home_list", locals: {bands: @arrBands} %>')
+initialize(<%= raw @arrBands.to_json %>)
+//starRating('.d-star-rating');

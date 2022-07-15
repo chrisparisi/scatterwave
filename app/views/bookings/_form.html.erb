@@ -1,0 +1,231 @@
+<div class="panel panel-default">
+  <p class="text-muted"><span class="text-primary h2"><% if @venue.Instant? %><i class="fa fa-bolt" style="color: #ffb400"></i> <% end %>
+    $<%= @venue.payout %></span></span> Per Gig</p>
+  <hr class="my-4">
+  <div class="panel-body">
+    <%= form_for([@venue, @venue.bookings.new]) do |f| %>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="bookingDate" class="form-label">Date *</label>
+              <div class="datepicker-co.format('DD-MM-YYYY')ntainer datepicker-container-right">
+                <%= f.text_field :date, placeholder: "Date", class: "form-control" %>
+                <!--<input type="text" name="bookingDate" id="bookingDate" placeholder="Choose your dates" required="required" class="form-control">-->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label id="bookin-ava-time" for="bookingDate" class="form-label"></label>
+              <div class="datepicker-container datepicker-container-right">
+                <div id="available-times"></div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="col-md-4">-->
+          <!--<label>Start Time</label>-->
+          <!--<%#= f.text_field :start_time, readonly: true, placeholder: "Start Time", class: "form-control timepicker" %>-->
+          <!--</div>-->
+          <!--<div class="col-md-4">-->
+          <!--<label>End Time</label>-->
+          <!--<%#= f.text_field :end_time, readonly: true, placeholder: "End Time", class: "form-control timepicker" %>-->
+          <!--</div>-->
+        </div>
+
+        <h4 class="message-alert text-center"><span id="message"></span></h4>
+        <div id="preview" style="display: none">
+          <table class="booking-table">
+            <tbody>
+            <tr>
+              <td>Payout</td>
+              <td class="text-right">$<span id="booking_price"><%= @venue.payout %></span></td>
+            </tr>
+            <tr>
+              <td>Timeslot(s)</td>
+              <td class="text-right">x <span id="booking_time"></span></td>
+            </tr>
+            <tr>
+              <td class="total">Total</td>
+              <td class="text-right">$<span id="booking_total"></span></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <br/>
+
+        <% if @venue.Instant? %>
+            <%= f.submit "Book Now", id: "btn_book", class: "btn btn-primary btn-block" %>
+        <% else %>
+            <%= f.submit "Request Now", id: "btn_book", class: "btn btn-primary btn-block" %>
+        <% end %>
+    <% end %>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.19.0/jquery.daterangepicker.min.js"></script>
+
+<script>
+
+    function checkDate(date) {
+        dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+        return [$.inArray(dmy, availableDates) != -1];
+    }
+
+
+    $(function () {
+        $('#btn_book').attr('disabled', true);
+        availableDates = [];
+
+        function specialCheck() {
+//        var start_date = $('#booking_date').datepicker('getDate');
+            var start_date = $('#booking_date').val();
+            var calendar_time_id = $('.time-radio').val();
+
+            if (start_date && calendar_time_id) {
+                var input = {
+                    'calendar_time_id': calendar_time_id
+                }
+                $.ajax({
+                    url: '<%= preview_venue_path(@venue) %>',
+                    data: input,
+                    success: function (data) {
+                        if (data.conflict) {
+                            $('#message').text("These dates are not available");
+                            $('#preview').hide();
+                            $('#btn_book').attr('disabled', true);
+                        } else {
+                            $('#message').text("");
+                            $('#booking_price, #booking_total').text(data.price);
+                            $('#preview').show();
+                            $('#btn_book').attr('disabled', false);
+                        }
+                    }
+                });
+            } else {
+                $('#preview').hide();
+                $('#btn_book').attr('disabled', true);
+            }
+        }
+
+        function getAvailableTime(date) {
+            $('#preview').hide();
+            $('#btn_book').attr('disabled', true);
+            moment
+//        var start_date = $('#booking_date').datepicker('getDate');
+            var start_date = new Date(date.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"))
+            if (start_date) {
+                var input = {
+                    'start_date': start_date
+                }
+                $.ajax({
+                    url: '<%= get_available_times_venue_path(@venue) %>',
+                    dateTyp: "script",
+                    data: input,
+                    success: function (data) {
+                    }
+                });
+            } else {
+                $('#available-times').html('');
+                $('#preview').hide();
+                $('#btn_book').attr('disabled', true);
+            }
+        }
+
+
+        $.ajax({
+            url: '<%= preload_venue_path(@venue) %>',
+            dateTyp: 'json',
+            success: function (data) {
+                $.each(data.available_dates, function (arrID, arrValue) {
+                    availableDates.push($.datepicker.formatDate('d-m-yy', new Date(arrValue.day)));
+                });
+//        $('#booking_date').datepicker({
+//          dateFormat: 'dd-mm-yy',
+//          minDate: 0,
+//          maxDate: '6m',
+//          beforeShowDay: checkDate,
+//          onSelect: function(selected) {
+//              getAvailableTime();
+//          }
+//        });
+                $(function () {
+                    var dateRangeConfig = {
+                        autoClose: true,
+                        singleDate: true,
+                        showShortcuts: false,
+                        singleMonth: true,
+                        format: 'DD-MM-YYYY',
+                        startDate: moment((availableDates.length == 0 ? new Date() : availableDates[0]), "DD-MM-YYYY"),
+                        endDate: moment(availableDates.length == 0 ? new Date() : availableDates[availableDates.length - 1], "DD-MM-YYYY"),
+//                  startDate: new Date(availableDates[0].replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")),
+//                  endDate: new Date((availableDates[availableDates.length - 1]).replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")),
+//          selectForward: true,
+                        beforeShowDay: checkDate,
+                        applyBtnClass: 'btn btn-primary',
+                        container: '.datepicker-container',
+                        inline: true,
+                        showDateFilter: function (time, date) {
+                            return '<div style="padding:5px;">\
+                            <span style="">' + date + '</span>\
+                        </div>';
+                        },
+                        customOpenAnimation: function (cb) {
+                            $(this).fadeIn(300, cb);
+                        },
+                        customCloseAnimation: function (cb) {
+                            $(this).fadeOut(300, cb);
+                        }
+                    }
+                    $('#booking_date').dateRangePicker(dateRangeConfig).bind('datepicker-change', function (event, obj) {
+                        $('#available-times').html('');
+                        $('#bookin-ava-time').html('');
+                        getAvailableTime(obj.value)
+                    });
+                });
+                $('#booking_start_time').timepicker({
+                    startTime: '09:00:00',
+                    change: function (selected) {
+                        $('#booking_end_time').timepicker("option", "minTime", selected);
+                        $('#booking_end_time').attr("disabled", false);
+                        $('#booking_end_time').val('');
+                        $('#btn_book').attr('disabled', true);
+                    }
+                });
+
+                $('#booking_end_time').timepicker({
+                    startTime: '09:30:00',
+                    change: function (selected) {
+                        specialCheck();
+//            $('#booking_start_time').timepicker("option", "maxTime", selected);
+//
+//            var start_time = $('#booking_start_time').timepicker('getTime');
+//            var end_time = $('#booking_end_time').timepicker('getTime');
+//
+//            var input = {
+//              'start_time': start_time,
+//              'end_time': end_time
+//            }
+
+//            $.ajax({
+//              url: '<%#= preview_venue_path(@venue) %>',
+//              data: input,
+//              success: function(data) {
+//
+//                $('#preview').show();
+//                $('#btn_book').attr('disabled', false);
+//
+//              }
+//            });
+
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', '.time-radio', function () {
+            specialCheck()
+        });
+
+    });
+</script>

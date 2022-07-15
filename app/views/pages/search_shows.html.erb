@@ -1,0 +1,158 @@
+<!--<div id="main">-->
+<!--<div class="container-fluid">-->
+  <div class="row">
+    <div class="col-lg-8 py-5 p-xl-5">
+      <%= simple_form_for @search, :as => :search, url: search_shows_path, method: :get, remote: true do |f| %>
+          <div class="row">
+            <div class="col-xl-6 col-md-6 mb-4">
+              <label for="date" class="form-label">Date to perform on</label>
+              <div class="datepicker-container datepicker-container-left">
+                <!--<input type="text" name="bookingDate" id="form_dates" placeholder="Choose your dates" class="form-control">-->
+                <%= f.text_field :dates, placeholder: "Choose your dates", class: "form-control", id: "dates" %>
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-md-6 mb-4">
+              <label for="searchvenuelocation" class="form-label">Location</label>
+              <%= f.text_field :location, placeholder: "Where do you want to find local bands at?", class: "form-control", id: "searchvenuelocation" %>
+            </div>
+
+            <!--<div class="col-xl-4 col-md-6 mb-4">-->
+              <!--<label for="name" class="form-label">name</label>-->
+              <!--<%#= f.text_field :name, placeholder: "Where do you want to find local bands at?", class: "form-control", id: "searchvenuename" %>-->
+            <!--</div>-->
+
+            <div class="col-12 pb-4">
+              <div id="moreFilters" class="collapse">
+                <div class="filter-block">
+                  <h6 class="mb-3">Music Genres</h6>
+                  <ul class="list-inline mb-0">
+                    <% [["is_alternative", "Alternative"], ["is_americana", "Americana"], ["is_blues", "Blues"],
+                        ["is_christian", "Christian"], ["is_classical", "Classical"], ["is_comedy", "Comedy"],
+                        ["is_country", "Country"], ["is_edm", "EDM"], ["is_electronic", "Electronic"],
+                        ["is_folk", "Folk"], ["is_hiphop", "Hip Hop"], ["is_jazz", "Jazz"], ["is_latin", "Latin"],
+                        ["is_metal", "Metal"], ["is_pop", "Pop"], ["is_rb", "R + B"], ["is_rock", "Rock"],
+                        ["is_spokenword", "Spoken Word"], ["is_world", "World"]].each do |g| %>
+                        <li class="list-inline-item">
+                          <div class="custom-control custom-checkbox">
+                            <%= f.check_box :genres, { :multiple => true, id: g[0].parameterize, class: "custom-control-input" }, g[0], nil %>
+                            <label for="<%= g[0].parameterize %>" class="custom-control-label"><%= g[1] %></label>
+                          </div>
+                        </li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 mb-4 order-2 order-sm-1">
+              <button type="submit" class="btn btn-primary"> <i class="fas fa-search mr-1"></i>Search                </button>
+            </div>
+            <div class="col-sm-6 mb-4 text-sm-right order-1 order-sm-2">
+              <button type="button" data-toggle="collapse" data-target="#moreFilters" aria-expanded="false" aria-controls="moreFilters" data-expanded-text="Less filters" data-collapsed-text="More filters" class="btn btn-link btn-collapse pl-0 text-secondary">More filters</button>
+            </div>
+          </div>
+      <% end %>
+      <div class="row" id="show_listing">
+        <% @arrBookings.each do |show| %>
+            <div class="col-xl-4 col-lg-3 col-md-2 col-sm-6 mb-5 hover-animate">
+              <%= render "bookings/booking", show: show %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-4 map-side-lg pr-lg-0">
+      <div id="showsSideMap" class="map-full shadow-left"></div>
+    </div>
+  <!--</div>-->
+<!--</div>-->
+
+
+
+
+
+  <!--<div id="right">-->
+    <!--&lt;!&ndash; GOOGLE MAP &ndash;&gt;-->
+
+    <!--<div id="map" style="width: 100%; height: 100%"></div>-->
+
+    <!--&lt;!&ndash;<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initMap"&ndash;&gt;-->
+            <!--&lt;!&ndash;type="text/javascript"></script>&ndash;&gt;-->
+
+    <script>
+//        function initialize(bookings) {
+//            var location = {lat: 44.5403, lng: -78.34}
+//
+//            if (bookings.length > 0) {
+//                location = {lat: bookings[0].latitude, lng: bookings[0].longitude }
+//            }
+//
+//            var map = new google.maps.Map(document.getElementById('map'), {
+//                center: location,
+//                zoom: 12
+//            });
+//
+//            var marker, inforwindow;
+//
+//            bookings.forEach(function(booking) {
+//                marker = new google.maps.Marker({
+//                    position: {lat: booking.latitude, lng: booking.longitude },
+//                    map: map
+//                });
+//
+//                inforwindow = new google.maps.InfoWindow({
+//                    content: "<div class='map_payout'>$" + booking.payout + "</div>"
+//                });
+//
+//                inforwindow.open(map, marker);
+//            })
+//        }
+//
+//        google.maps.event.addDomListener(window, 'load', function() {
+//            initialize(<%#= raw @arrBookings.to_json %>)
+//        });
+    </script>
+  </div>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.19.0/jquery.daterangepicker.min.js"> </script>
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+  <script>
+      createListingsMap({
+          mapId: 'showsSideMap',
+          jsonData: <%= raw @arrBookings.to_json %>,
+          mapPopupType: 'rental',
+          useTextIcon: true
+      });
+  </script>
+
+  <script>
+      $(function() {
+          $("#searchshowlocation").geocomplete();
+      })
+
+      $(function () {
+          var dateRangeConfig = {
+              autoClose: true,
+              showShortcuts: false,
+              startDate: new Date(),
+              selectForward: true,
+              applyBtnClass: 'btn btn-primary',
+              container: '.datepicker-container',
+              inline: true,
+              showDateFilter: function (time, date) {
+                  return '<div style="padding:5px;">\
+                            <span style="">' + date + '</span>\
+                        </div>';
+              },
+              customOpenAnimation: function (cb) {
+                  $(this).fadeIn(300, cb);
+              },
+              customCloseAnimation: function (cb) {
+                  $(this).fadeOut(300, cb);
+              }
+          }
+          $('#dates').dateRangePicker(dateRangeConfig);
+      });
+  </script>

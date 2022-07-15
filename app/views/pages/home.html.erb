@@ -1,0 +1,725 @@
+<section class="hero-home">
+  <div class="swiper-container hero-slider">
+    <div class="swiper-wrapper dark-overlay">
+      <div style="background-image:url(<%= asset_url('banner.jpg') %>)" class="swiper-slide"></div>
+      <div style="background-image:url(<%= asset_url('banner.jpg') %>)" class="swiper-slide"></div>
+      <div style="background-image:url(<%= asset_url('banner.jpg') %>)" class="swiper-slide"></div>
+      <div style="background-image:url(<%= asset_url('banner.jpg') %>)" class="swiper-slide"></div>
+    </div>
+  </div>
+  <div class="container py-6 py-md-7 text-white z-index-20">
+    <div class="row">
+      <div class="col-xl-10">
+        <div class="text-center text-lg-left">
+          <h1 class="subtitle display-4 letter-spacing-4 mb-2 text-secondary text-shadow">Scatterwave</h1>
+          <p class="h2 font-weight-bold text-shadow"> Find the bands, shows, and venues in your area</p>
+        </div>
+        <div class="search-bar mt-5 p-3 p-lg-1 pl-lg-4">
+          <%= form_tag search_path do |f| %>
+            <div class="row">
+              <div class="col-lg-7 d-flex align-items-center form-group">
+                <div class="input-label-absolute input-label-absolute-right w-100">
+                  <label for="location" class="label-absolute"><i class="fa fa-crosshairs"></i><span class="sr-only">City</span></label>
+                  <input type="text" name="search[location]" placeholder="Location" id="showlocation" class="form-control border-0 shadow-0">
+                </div>
+              </div>
+              <div class="col-lg-3 d-flex align-items-center form-group no-divider">
+                <select title="Categories" data-style="btn-form-control" class="selectpicker" name="category">
+                  <option value="shows" selected>Shows</option>
+                  <option value="bands">Bands</option>
+                  <option value="venues">Venues</option>
+                  <!--<option value="x-large">Garages</option>-->
+                </select>
+              </div>
+              <div class="col-lg-2">
+                <button type="submit" class="btn btn-primary btn-block rounded-xl h-100">Search </button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="py-5 bg-gray-100">
+  <div class="container">
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <p class="subtitle text-secondary">Find great shows playing locally</p>
+        <h2>Shows</h2>
+      </div>
+      <div class="col-md-4 d-lg-flex align-items-center justify-content-end">
+        <%= link_to search_shows_path, class: "text-muted text-sm" do %>
+            See all Shows<i class="fas fa-angle-double-right ml-2"></i>
+        <% end %>
+      </div>
+    </div>
+    <div data-swiper="{&quot;slidesPerView&quot;:3}" class="swiper-container swiper-container-mx-negative swiper-init pt-3">
+      <div class="swiper-wrapper pb-5">
+        <%#= render partial: "bookings/bookings_list", locals: {bookings: @bookings} %>
+        <%= render partial: "bookings/bookings", locals: {shows: @bookings} %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-gray-100">
+  <div class="container">
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <p class="subtitle text-secondary">Discover up and coming local bands</p>
+        <h2>Bands</h2>
+      </div>
+      <div class="col-md-4 d-lg-flex align-items-center justify-content-end">
+        <%= link_to search_bands_path, class: "text-muted text-sm" do %>
+            See all Bands<i class="fas fa-angle-double-right ml-2"></i>
+        <% end %>
+      </div>
+    </div>
+    <div data-swiper="{&quot;slidesPerView&quot;:3}" class="swiper-container swiper-container-mx-negative swiper-init pt-3">
+      <div class="swiper-wrapper pb-5">
+        <%#= render partial: "bands/home_list", locals: {bands: @bands} %>
+        <%= render partial: "bands/bands", locals: {bands: @bands} %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-gray-100">
+  <div class="container">
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <p class="subtitle text-secondary">Book awesome venues for your band</p>
+        <h2>Venues</h2>
+      </div>
+      <div class="col-md-4 d-lg-flex align-items-center justify-content-end">
+        <%= link_to search_venues_path, class: "text-muted text-sm" do %>
+            See all Venues<i class="fas fa-angle-double-right ml-2"></i>
+        <% end %>
+      </div>
+    </div>
+    <div data-swiper="{&quot;slidesPerView&quot;:3}" class="swiper-container swiper-container-mx-negative swiper-init pt-3">
+      <div class="swiper-wrapper pb-5">
+        <%#= render partial: "venues/venues_list", locals: {venues: @venues} %>
+        <%= render partial: "venues/venues", locals: {venues: @venues} %>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<script>
+    $('#date').datepicker({
+        dateFormat: 'dd-mm-yy',
+        minDate: 0,
+        maxDate: '6m',
+    });
+
+    $(function () {
+        $("#showlocation").geocomplete();
+    });
+
+    $(function () {
+        $("#bandlocation").geocomplete();
+    });
+
+    $(function () {
+        $("#venuelocation").geocomplete();
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="py-6 bg-gray-100">
+  <div class="container">
+    <div class="text-center pb-lg-4">
+      <p class="subtitle text-secondary">Bringing bands, venues, and audiences together</p>
+      <h2 class="mb-5">Find and create amazing concerts</h2>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 mb-3 mb-lg-0 text-center">
+        <div class="px-0 px-lg-3">
+          <div class="icon-rounded bg-primary-light mb-3">
+            <svg class="svg-icon text-primary w-2rem h-2rem">
+              <use xlink:href="#destination-map-1"></use>
+            </svg>
+          </div>
+          <h3 class="h5">Shows</h3>
+          <p class="text-muted">Find great shows playing in your area. Sort them by genre and area. Then listen to them
+            on Scatterwave to see how you like them!</p>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-3 mb-lg-0 text-center">
+        <div class="px-0 px-lg-3">
+          <div class="icon-rounded bg-primary-light mb-3">
+            <svg class="svg-icon text-primary w-2rem h-2rem">
+              <use xlink:href="#pay-by-card-1"></use>
+            </svg>
+          </div>
+          <h3 class="h5">Bands</h3>
+          <p class="text-muted">Find and book your next tour. Search venues for available time slots, see what they are
+            paying and book them on the spot. Then connect with audiences on Scatterwave to insure you get great
+            audiences!</p>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-3 mb-lg-0 text-center">
+        <div class="px-0 px-lg-3">
+          <div class="icon-rounded bg-primary-light mb-3">
+            <svg class="svg-icon text-primary w-2rem h-2rem">
+              <use xlink:href="#heart-1"></use>
+            </svg>
+          </div>
+          <h3 class="h5">Venues</h3>
+          <p class="text-muted">Simplify the booking process! Select a time you are looking for a band and bands will
+            submit their electronic press kits to you, then select the band that is the best fit for your venue. Booked
+            shows will be promoted to local audiences making sure everybody knows about your events. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--<section class="py-6">-->
+<!--<div class="container">-->
+<!--<div class="row mb-5">-->
+<!--<div class="col-md-8">-->
+<!--<p class="subtitle text-primary">Stay and eat like a local</p>-->
+<!--<h2>Our guides</h2>-->
+<!--</div>-->
+<!--<div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="category.html" class="text-muted text-sm">-->
+
+<!--See all guides<i class="fas fa-angle-double-right ml-2"></i></a></div>-->
+<!--</div>-->
+<!--<div class="swiper-container guides-slider mx-n2 pt-3">-->
+<!--&lt;!&ndash; Additional required wrapper&ndash;&gt;-->
+<!--<div class="swiper-wrapper pb-5">-->
+<!--&lt;!&ndash; Slides&ndash;&gt;-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--<div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a href="category.html" class="tile-link"></a><img src="<%= asset_url('banner.jpg') %>" alt="Card image" class="bg-image">-->
+<!--<div class="card-body overlay-content">-->
+<!--<h6 class="card-title text-shadow text-uppercase">New York</h6>-->
+<!--<p class="card-text text-sm">The big apple</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--<div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a href="category.html" class="tile-link"></a><img src="<%= asset_url('banner.jpg') %>" alt="Card image" class="bg-image">-->
+<!--<div class="card-body overlay-content">-->
+<!--<h6 class="card-title text-shadow text-uppercase">Paris</h6>-->
+<!--<p class="card-text text-sm">Artist capital of Europe</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--<div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a href="category.html" class="tile-link"></a><img src="<%= asset_url('banner.jpg') %>" alt="Card image" class="bg-image">-->
+<!--<div class="card-body overlay-content">-->
+<!--<h6 class="card-title text-shadow text-uppercase">Barcelona</h6>-->
+<!--<p class="card-text text-sm">Dalí, Gaudí, Barrio Gotico</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--<div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a href="category.html" class="tile-link"></a><img src="<%= asset_url('banner.jpg') %>" alt="Card image" class="bg-image">-->
+<!--<div class="card-body overlay-content">-->
+<!--<h6 class="card-title text-shadow text-uppercase">Prague</h6>-->
+<!--<p class="card-text text-sm">City of hundred towers</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-pagination d-md-none"> </div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!--<section class="py-6 bg-gray-100">-->
+<!--<div class="container">-->
+<!--<div class="row mb-5">-->
+<!--<div class="col-md-8">-->
+<!--<p class="subtitle text-secondary">Hurry up, these are expiring soon.        </p>-->
+<!--<h2>Last minute deals</h2>-->
+<!--</div>-->
+<!--<div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="category.html" class="text-muted text-sm">-->
+
+<!--See all deals<i class="fas fa-angle-double-right ml-2"></i></a></div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Slider main container&ndash;&gt;-->
+<!--<div data-swiper="{&quot;slidesPerView&quot;:4,&quot;spaceBetween&quot;:20,&quot;loop&quot;:true,&quot;roundLengths&quot;:true,&quot;breakpoints&quot;:{&quot;1200&quot;:{&quot;slidesPerView&quot;:3},&quot;991&quot;:{&quot;slidesPerView&quot;:2},&quot;565&quot;:{&quot;slidesPerView&quot;:1}},&quot;pagination&quot;:{&quot;el&quot;:&quot;.swiper-pagination&quot;,&quot;clickable&quot;:true,&quot;dynamicBullets&quot;:true}}" class="swiper-container swiper-container-mx-negative swiper-init pt-3">-->
+<!--&lt;!&ndash; Additional required wrapper&ndash;&gt;-->
+<!--<div class="swiper-wrapper pb-5">-->
+<!--&lt;!&ndash; Slides&ndash;&gt;-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; place item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e33b1527bfe2abaf92" class="w-100 h-100 hover-animate">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div class="card-img-top overflow-hidden gradient-overlay"> <img src="<%= asset_url('banner.jpg') %>" alt="Modern, Well-Appointed Room" class="img-fluid"/><a href="detail-rooms.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<div class="media text-white text-sm align-items-center"><img src="<%= asset_url('banner.jpg') %>" alt="Pamela" class="avatar avatar-border-white mr-2"/>-->
+<!--<div class="media-body">Pamela</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"> </use>-->
+<!--</svg></a></div>-->
+<!--</div>-->
+<!--<div class="card-body d-flex align-items-center">-->
+<!--<div class="w-100">-->
+<!--<h6 class="card-title"><a href="detail-rooms.html" class="text-decoration-none text-dark">Modern, Well-Appointed Room</a></h6>-->
+<!--<div class="d-flex card-subtitle mb-3">-->
+<!--<p class="flex-grow-1 mb-0 text-muted text-sm">Private room</p>-->
+<!--<p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<p class="card-text text-muted"><span class="h4 text-primary">$80</span> per night</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; place item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e322f3375db4d89128" class="w-100 h-100 hover-animate">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div class="card-img-top overflow-hidden gradient-overlay"> <img src="<%= asset_url('banner.jpg') %>" alt="Cute Quirky Garden apt, NYC adjacent" class="img-fluid"/><a href="detail-rooms.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<div class="media text-white text-sm align-items-center"><img src="<%= asset_url('banner.jpg') %>" alt="John" class="avatar avatar-border-white mr-2"/>-->
+<!--<div class="media-body">John</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"> </use>-->
+<!--</svg></a></div>-->
+<!--</div>-->
+<!--<div class="card-body d-flex align-items-center">-->
+<!--<div class="w-100">-->
+<!--<h6 class="card-title"><a href="detail-rooms.html" class="text-decoration-none text-dark">Cute Quirky Garden apt, NYC adjacent</a></h6>-->
+<!--<div class="d-flex card-subtitle mb-3">-->
+<!--<p class="flex-grow-1 mb-0 text-muted text-sm">Entire apartment</p>-->
+<!--<p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300">                                  </i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<p class="card-text text-muted"><span class="h4 text-primary">$121</span> per night</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; place item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e3a31e62979bf147c9" class="w-100 h-100 hover-animate">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div class="card-img-top overflow-hidden gradient-overlay"> <img src="<%= asset_url('banner.jpg') %>" alt="Modern Apt - Vibrant Neighborhood!" class="img-fluid"/><a href="detail-rooms.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<div class="media text-white text-sm align-items-center"><img src="<%= asset_url('banner.jpg') %>" alt="Julie" class="avatar avatar-border-white mr-2"/>-->
+<!--<div class="media-body">Julie</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"> </use>-->
+<!--</svg></a></div>-->
+<!--</div>-->
+<!--<div class="card-body d-flex align-items-center">-->
+<!--<div class="w-100">-->
+<!--<h6 class="card-title"><a href="detail-rooms.html" class="text-decoration-none text-dark">Modern Apt - Vibrant Neighborhood!</a></h6>-->
+<!--<div class="d-flex card-subtitle mb-3">-->
+<!--<p class="flex-grow-1 mb-0 text-muted text-sm">Entire apartment</p>-->
+<!--<p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300">                                  </i><i class="fa fa-star text-gray-300">                                  </i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<p class="card-text text-muted"><span class="h4 text-primary">$75</span> per night</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; place item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e3503eb77d487e8082" class="w-100 h-100 hover-animate">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div class="card-img-top overflow-hidden gradient-overlay"> <img src="<%= asset_url('banner.jpg') %>" alt="Sunny Private Studio-Apartment" class="img-fluid"/><a href="detail-rooms.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<div class="media text-white text-sm align-items-center"><img src="<%= asset_url('banner.jpg') %>" alt="Barbora" class="avatar avatar-border-white mr-2"/>-->
+<!--<div class="media-body">Barbora</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"> </use>-->
+<!--</svg></a></div>-->
+<!--</div>-->
+<!--<div class="card-body d-flex align-items-center">-->
+<!--<div class="w-100">-->
+<!--<h6 class="card-title"><a href="detail-rooms.html" class="text-decoration-none text-dark">Sunny Private Studio-Apartment</a></h6>-->
+<!--<div class="d-flex card-subtitle mb-3">-->
+<!--<p class="flex-grow-1 mb-0 text-muted text-sm">Shared room</p>-->
+<!--<p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300">                                  </i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<p class="card-text text-muted"><span class="h4 text-primary">$93</span> per night</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; place item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e39aa2eed0626e485d" class="w-100 h-100 hover-animate">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div class="card-img-top overflow-hidden gradient-overlay"> <img src="<%= asset_url('banner.jpg') %>" alt="Mid-Century Modern Garden Paradise" class="img-fluid"/><a href="detail-rooms.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<div class="media text-white text-sm align-items-center"><img src="<%= asset_url('banner.jpg') %>" alt="Jack" class="avatar avatar-border-white mr-2"/>-->
+<!--<div class="media-body">Jack</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"> </use>-->
+<!--</svg></a></div>-->
+<!--</div>-->
+<!--<div class="card-body d-flex align-items-center">-->
+<!--<div class="w-100">-->
+<!--<h6 class="card-title"><a href="detail-rooms.html" class="text-decoration-none text-dark">Mid-Century Modern Garden Paradise</a></h6>-->
+<!--<div class="d-flex card-subtitle mb-3">-->
+<!--<p class="flex-grow-1 mb-0 text-muted text-sm">Entire house</p>-->
+<!--<p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<p class="card-text text-muted"><span class="h4 text-primary">$115</span> per night</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; place item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e39aa2edasd626e485d" class="w-100 h-100 hover-animate">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div class="card-img-top overflow-hidden gradient-overlay"> <img src="<%= asset_url('banner.jpg') %>" alt="Brooklyn Life, Easy to Manhattan" class="img-fluid"/><a href="detail-rooms.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<div class="media text-white text-sm align-items-center"><img src="<%= asset_url('banner.jpg') %>" alt="Stuart" class="avatar avatar-border-white mr-2"/>-->
+<!--<div class="media-body">Stuart</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"> </use>-->
+<!--</svg></a></div>-->
+<!--</div>-->
+<!--<div class="card-body d-flex align-items-center">-->
+<!--<div class="w-100">-->
+<!--<h6 class="card-title"><a href="detail-rooms.html" class="text-decoration-none text-dark">Brooklyn Life, Easy to Manhattan</a></h6>-->
+<!--<div class="d-flex card-subtitle mb-3">-->
+<!--<p class="flex-grow-1 mb-0 text-muted text-sm">Private room</p>-->
+<!--<p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300">                                  </i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<p class="card-text text-muted"><span class="h4 text-primary">$123</span> per night</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; If we need pagination&ndash;&gt;-->
+<!--<div class="swiper-pagination"></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!-- Divider Section-->
+<!--<section class="py-7 position-relative dark-overlay"><img src="<%= asset_url('banner.jpg') %>" alt="" class="bg-image">-->
+<!--<div class="container">-->
+<!--<div class="overlay-content text-white py-lg-5">-->
+<!--<h3 class="display-3 font-weight-bold text-serif text-shadow mb-5">Ready for your next holidays?</h3><a href="#" class="btn btn-light">Get started</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!--<section class="py-7">-->
+<!--<div class="container">-->
+<!--<div class="text-center">-->
+<!--<p class="subtitle text-primary">Testimonials</p>-->
+<!--<h2 class="mb-5">Our dear customers said about us</h2>-->
+<!--</div>-->
+<!--&lt;!&ndash; Slider main container&ndash;&gt;-->
+<!--<div class="swiper-container testimonials-slider testimonials">-->
+<!--&lt;!&ndash; Additional required wrapper&ndash;&gt;-->
+<!--<div class="swiper-wrapper pt-2 pb-5">-->
+<!--&lt;!&ndash; Slides&ndash;&gt;-->
+<!--<div class="swiper-slide px-3">-->
+<!--<div class="testimonial card rounded-lg shadow border-0">-->
+<!--<div class="testimonial-avatar"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid"></div>-->
+<!--<div class="text">-->
+<!--<div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>-->
+<!--<p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever</p><strong>Jessica Watson</strong>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide px-3">-->
+<!--<div class="testimonial card rounded-lg shadow border-0">-->
+<!--<div class="testimonial-avatar"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid"></div>-->
+<!--<div class="text">-->
+<!--<div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>-->
+<!--<p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever</p><strong>Jessica Watson</strong>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide px-3">-->
+<!--<div class="testimonial card rounded-lg shadow border-0">-->
+<!--<div class="testimonial-avatar"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid"></div>-->
+<!--<div class="text">-->
+<!--<div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>-->
+<!--<p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever</p><strong>Jessica Watson</strong>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide px-3">-->
+<!--<div class="testimonial card rounded-lg shadow border-0">-->
+<!--<div class="testimonial-avatar"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid"></div>-->
+<!--<div class="text">-->
+<!--<div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>-->
+<!--<p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever</p><strong>Jessica Watson</strong>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide px-3">-->
+<!--<div class="testimonial card rounded-lg shadow border-0">-->
+<!--<div class="testimonial-avatar"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid"></div>-->
+<!--<div class="text">-->
+<!--<div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>-->
+<!--<p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever</p><strong>Jessica Watson</strong>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide px-3">-->
+<!--<div class="testimonial card rounded-lg shadow border-0">-->
+<!--<div class="testimonial-avatar"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid"></div>-->
+<!--<div class="text">-->
+<!--<div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>-->
+<!--<p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever</p><strong>Jessica Watson</strong>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-pagination">     </div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!--<section class="py-6 bg-gray-100">-->
+<!--<div class="container">-->
+<!--<div class="row mb-5">-->
+<!--<div class="col-md-8">-->
+<!--<p class="subtitle text-secondary">Stories from around the globe</p>-->
+<!--<h2>From our travel blog</h2>-->
+<!--</div>-->
+<!--<div class="col-md-4 d-md-flex align-items-center justify-content-end"><a href="#" class="text-muted text-sm">-->
+
+<!--See all articles<i class="fas fa-angle-double-right ml-2"></i></a></div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--&lt;!&ndash; blog item&ndash;&gt;-->
+<!--<div class="col-lg-4 col-sm-6 mb-4 hover-animate">-->
+<!--<div class="card shadow border-0 h-100"><a href="#" ><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid card-img-top"/></a>-->
+<!--<div class="card-body"><a href="#" class="text-uppercase text-muted text-sm letter-spacing-2">Travel </a>-->
+<!--<h5 class="my-2"><a href="#" class="text-dark">Autumn fashion tips and tricks          </a></h5>-->
+<!--<p class="text-gray-500 text-sm my-3"><i class="far fa-clock mr-2"></i>January 16, 2016</p>-->
+<!--<p class="my-2 text-muted text-sm">Pellentesque habitant morbi tristique senectus. Vestibulum tortor quam, feugiat vitae, ultricies ege...</p><a href="post.html" class="btn btn-link pl-0">Read more<i class="fa fa-long-arrow-alt-right ml-2"></i></a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; blog item&ndash;&gt;-->
+<!--<div class="col-lg-4 col-sm-6 mb-4 hover-animate">-->
+<!--<div class="card shadow border-0 h-100"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid card-img-top"/></a>-->
+<!--<div class="card-body"><a href="#" class="text-uppercase text-muted text-sm letter-spacing-2">Living </a>-->
+<!--<h5 class="my-2"><a href="#" class="text-dark">Newest photo apps          </a></h5>-->
+<!--<p class="text-gray-500 text-sm my-3"><i class="far fa-clock mr-2"></i>January 16, 2016</p>-->
+<!--<p class="my-2 text-muted text-sm">ellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibu...</p><a href="post.html" class="btn btn-link pl-0">Read more<i class="fa fa-long-arrow-alt-right ml-2"></i></a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; blog item&ndash;&gt;-->
+<!--<div class="col-lg-4 col-sm-6 mb-4 hover-animate">-->
+<!--<div class="card shadow border-0 h-100"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="img-fluid card-img-top"/></a>-->
+<!--<div class="card-body"><a href="#" class="text-uppercase text-muted text-sm letter-spacing-2">Travel </a>-->
+<!--<h5 class="my-2"><a href="#" class="text-dark">Best books about Photography          </a></h5>-->
+<!--<p class="text-gray-500 text-sm my-3"><i class="far fa-clock mr-2"></i>January 16, 2016</p>-->
+<!--<p class="my-2 text-muted text-sm">Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.  Mauris placerat eleif...</p><a href="#" class="btn btn-link pl-0">Read more<i class="fa fa-long-arrow-alt-right ml-2"></i></a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!-- Instagram-->
+<!--<section>-->
+<!--<div class="container-fluid px-0">-->
+<!--<div class="swiper-container instagram-slider">-->
+<!--<div class="swiper-wrapper">-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--<div class="swiper-slide overflow-hidden"><a href="#"><img src="<%= asset_url('banner.jpg') %>" alt="" class="img-fluid hover-scale"></a></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!-- Footer-->
+<footer class="position-relative z-index-10 d-print-none">
+  <!-- Main block - menus, subscribe form-->
+  <div class="py-6 bg-gray-200 text-muted">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <div class="font-weight-bold text-uppercase text-dark mb-3"></div>
+          <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>-->
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="twitter" class="text-muted text-hover-primary"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="facebook" class="text-muted text-hover-primary"><i class="fab fa-facebook"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="instagram" class="text-muted text-hover-primary"><i class="fab fa-instagram"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="pinterest" class="text-muted text-hover-primary"><i class="fab fa-pinterest"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="vimeo" class="text-muted text-hover-primary"><i class="fab fa-vimeo"></i></a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+          <h6 class="text-uppercase text-dark mb-3">Find</h6>
+          <ul class="list-unstyled">
+            <li><%= link_to "Shows", search_shows_path, class: "text-muted" %></li>
+            <li><%= link_to "Bands", search_bands_path, class: "text-muted" %></li>
+            <li><%= link_to "Venues", search_venues_path, class: "text-muted" %></li>
+            <!--<li><a href="#" class="text-muted">Side map </a></li>-->
+            <!--<li><a href="#" class="text-muted">No map </a></li>-->
+            <!--<li><a href="#" class="text-muted">Room detail </a></li>-->
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+          <h6 class="text-uppercase text-dark mb-3">Pages</h6>
+          <ul class="list-unstyled">
+
+            <li><%= link_to "Contact", contact_us_path, class: "text-muted" %></li>
+            <li><%= link_to "Pricing", pricing_path, class: "text-muted" %></li>
+            <li><%= link_to "Terms & Conditions", terms_path, class: "text-muted" %></li>
+            <!--<li><a href="#" class="text-muted">F.A.Q.s  <span class="badge badge-info ml-1">New</span></a></li>-->
+            <!--<li><a href="#" class="text-muted">Coming soon </a></li>-->
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h6 class="text-uppercase text-dark mb-3">Join our emailing list and find out when special shows and events
+            are playing!</h6>
+          <!--<p class="mb-3"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. At itaque temporibus.</p>-->
+          <form action="#" id="newsletter-form">
+            <div class="input-group mb-3">
+              <input type="email" placeholder="Your Email Address" aria-label="Your Email Address" class="form-control bg-transparent border-dark border-right-0">
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-dark border-left-0">
+                  <i class="fa fa-paper-plane text-lg"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Copyright section of the footer-->
+  <div class="py-4 font-weight-light bg-gray-800 text-gray-300">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-left">
+          <p class="text-sm mb-md-0">&copy; 2020 Scatterwave. All rights reserved.</p>
+        </div>
+        <div class="col-md-6">
+<!--          <ul class="list-inline mb-0 mt-2 mt-md-0 text-center text-md-right">-->
+<!--            <li class="list-inline-item"><img src="<%#= asset_url('banner.jpg') %>" alt="..." class="w-2rem"></li>-->
+<!--            <li class="list-inline-item"><img src="<%#= asset_url('banner.jpg') %>" alt="..." class="w-2rem"></li>-->
+<!--            <li class="list-inline-item"><img src="<%#= asset_url('banner.jpg') %>" alt="..." class="w-2rem"></li>-->
+<!--            <li class="list-inline-item"><img src="<%#= asset_url('banner.jpg') %>" alt="..." class="w-2rem"></li>-->
+<!--          </ul>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- /Footer end-->
+<!-- JavaScript files-->
+<script>
+    // ------------------------------------------------------- //
+    //   Inject SVG Sprite -
+    //   see more here
+    //   https://css-tricks.com/ajaxing-svg-sprite/
+    // ------------------------------------------------------ //
+    function injectSvgSprite(path) {
+
+        var ajax = new XMLHttpRequest();
+        ajax.open("GET", path, true);
+        ajax.send();
+        ajax.onload = function (e) {
+            var div = document.createElement("div");
+            div.className = 'd-none';
+            div.innerHTML = ajax.responseText;
+            document.body.insertBefore(div, document.body.childNodes[0]);
+        }
+    }
+
+    // to avoid CORS issues when viewing using file:// protocol, using the demo URL for the SVG sprite
+    // use your own URL in production, please :)
+    // https://demo.bootstrapious.com/directory/1-0/icons/orion-svg-sprite.svg
+    //- injectSvgSprite('icons/orion-svg-sprite.svg');
+    injectSvgSprite('https://demo.bootstrapious.com/directory/1-1/icons/orion-svg-sprite.svg');
+
+</script>
+<script>var basePath = ''</script>

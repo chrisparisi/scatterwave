@@ -1,0 +1,47 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><%= link_to "Your Band", bands_path, class: "sidebar-link active" %></li>
+          <li class="sidebar-item"><%= link_to "Your Tours", your_tours_path, class: "sidebar-link" %></li>
+        </ul>
+      </div>
+      <div class="col-md-9">
+        <div class="card mb-2">
+          <h2 class="h6 mb-2 card-header pt-4 pb-3 px-0 mx-4">
+            Your Band
+          </h2>
+          <% if @band.blank? %>
+              <div class="card-body m-4">
+                <h3>You haven't created a band!</h3><br/>
+                <%= link_to "Start a band and book some gigs!", new_band_path, class: "btn btn-primary" %>
+              </div>
+          <% else %>
+
+              <div class="card-body p-3">
+                <!-- Details -->
+                <div class="d-sm-flex align-items-center">
+                  <div class="u-lg-avatar mb-3 mb-sm-0 mr-3">
+                    <%= image_tag @band.cover_picture(:thumb), class: "img-fluid rounded-circle" %>
+                  </div>
+                  <div class="mr-3">
+                    <!-- Title -->
+                    <div class="mb-3">
+                      <h3 class="h5 mb-1"><%= @band.band_name %></h3>
+                      <p class="font-size-1"><%= truncate(@band.summary, :length => 80) %></p>
+                    </div>
+                  </div>
+                  <div class="ml-auto">
+                    <%= link_to "Update", listing_band_path(@band), class: "btn btn-primary " %>
+                  </div>
+                </div>
+                <!-- End Details -->
+              </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

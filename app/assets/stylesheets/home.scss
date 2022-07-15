@@ -1,0 +1,24 @@
+// Place all the styles related to the Venue controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'variable';
+
+body.body-header-padding{
+  padding-top: 71px;
+}
+
+.navbar .dropdown-toggle::after {
+  top: 8px;
+}
+
+.logo{
+  img{
+    max-width: 195px;
+    object-fit: contain;
+    height: 50px;
+  }
+}
+.bootstrap-select ul.dropdown-menu li:first-child {
+  display: none;
+}

@@ -1,0 +1,18 @@
+<% if !bands.blank? %>
+    <h3>You don't have any bookings</h3><br/>
+    <%= link_to "Start a band and book some gigs!", new_band_path, class: "btn btn-primary" %>
+<% else %>
+
+
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading preview">
+        <%= image_tag @band.cover_picture(:medium) %>
+      </div>
+      <div class="panel-body">
+        <%= link_to @band.band_name, @band %><br/>
+        <span class="d-star-rating" data-rating=<%= @band.average_rating %> ></span> <%= pluralize(@band.host_reviews.count, "review") %>
+      </div>
+    </div>
+  </div>
+<% end %>

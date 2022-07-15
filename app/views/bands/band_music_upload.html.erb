@@ -1,0 +1,63 @@
+<div style="height: 8px;" class="progress rounded-0 sticky-top">
+  <div role="progressbar" style="width:83.32%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div>
+</div>
+<section class="py-5">
+  <div class="container">
+    <p class="subtitle text-primary">Add new band</p>
+    <h1 class="h2 mb-5"> Music <span class="text-muted float-right">Step 5</span></h1>
+    <div class="row form-block">
+      <div class="col-lg-4">
+        <h4>Music</h4>
+        <p class="text-muted text-sm">Upload your music! This allows venues and potential fans to discover
+         your talent on Scatterwave and get pumped for your shows!</p>
+      </div>
+      <div class="col-lg-7 ml-auto">
+        <div class="form-group">
+          <%= form_for @band, url: band_band_musics_path(@band), method: 'post', html: {multipart: true} do |f| %>
+
+              <div class="row">
+                <div class="col-sm-12 form-group">
+                     <span class="btn btn-default btn-file text-babu dropzone dz-clickable">
+                      <i class="fa fa-cloud-upload" aria-hidden="true"></i> Select Musics
+                       <%= file_field_tag "musics[]", type: :file, multiple: true, accept: ".mp3" %>
+                    </span>
+                </div>
+              </div>
+              <%= f.submit "Add Musics", class: "btn btn-primary float-right" %>
+          <% end %>
+          <div id="musics"  data-music-upload="<%= @band_musics.count %>"><%= render 'band_musics/music_list' %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-block flex-column flex-sm-row">
+      <div class="col text-center text-sm-left">
+        <%= link_to band_pic_upload_band_path, class: "btn btn-link text-muted" do %>
+            <i class="fa-chevron-left fa mr-2"></i>Back
+        <% end %>
+      </div>
+      <% is_ready = !@band.summary.blank? && !@band.pictures.blank? %>
+      <div class="col text-center text-sm-right">
+        <%= form_for @band do |f| %>
+            <%= f.hidden_field :active, value: current_user.merchant_id.present? ? true : false %>
+            <%= f.submit "Publish", id: "publish_button", class: "btn btn-primary px-3", disabled: !is_ready %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+    $('.next').click(function () {
+
+        var name = $('#musics_').val();
+
+        if (name.length < 1 && ($("#musics").attr('data-music-upload') == "0")) {
+            alert('Upload your music.');
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    });
+</script>

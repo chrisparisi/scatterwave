@@ -1,0 +1,121 @@
+<section class="hero py-5 py-lg-7">
+  <div class="container position-relative">
+    <h1 class="hero-heading mb-5">Pricing</h1>
+  </div>
+</section>
+<section class="py-6">
+  <div class="container">
+
+    <p class="text-muted mb-4 pb-2">Let’s keep it simple.</p>
+
+    <p class="text-muted mb-4">Scatterwave has no subscription cost, we do not charge you an application fee to send
+      your electronic presskit, nor do we have some “extra exclusive premiere paygate” that you have to pony up for
+      to get the best features of our service.
+    </p>
+
+
+    <p class="text-muted mb-4">
+      Scatterwave just takes a flat 10% of the band’s payout after a successful booking and show. No more, no less.
+    </p>
+
+
+    <p class="text-muted mb-4">
+      With that, you are getting the ability to find venues in a centralized location, getting your booked shows
+      promoted to audiences with similar music tastes, and countless tools to make sure your events are successful
+      ones.
+    </p>
+
+
+    <p class="text-muted mb-4">
+      If you are not able to book a show through Scatterwave, no worries, it won’t cost you a thing. So what is
+      stopping you from boosting your music career here and creating great shows?
+    </p>
+
+  </div>
+</section>
+<footer class="position-relative z-index-10 d-print-none">
+  <!-- Main block - menus, subscribe form-->
+  <div class="py-6 bg-gray-200 text-muted">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <div class="font-weight-bold text-uppercase text-dark mb-3"></div>
+          <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>-->
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="twitter" class="text-muted text-hover-primary"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="facebook" class="text-muted text-hover-primary"><i class="fab fa-facebook"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="instagram" class="text-muted text-hover-primary"><i class="fab fa-instagram"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" target="_blank" title="pinterest" class="text-muted text-hover-primary"><i class="fab fa-pinterest"></i></a>
+            </li>
+            <!--<li class="list-inline-item">-->
+            <!--<a href="#" target="_blank" title="vimeo" class="text-muted text-hover-primary"><i class="fab fa-vimeo"></i></a>-->
+            <!--</li>-->
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+          <h6 class="text-uppercase text-dark mb-3">Find</h6>
+          <ul class="list-unstyled">
+            <li><%= link_to "Shows", search_shows_path, class: "text-muted" %></li>
+            <li><%= link_to "Bands", search_bands_path, class: "text-muted" %></li>
+            <li><%= link_to "Venues", search_venues_path, class: "text-muted" %></li>
+            <!--<li><a href="#" class="text-muted">Rooms </a></li>-->
+            <!--<li><a href="#" class="text-muted">Map on top </a></li>-->
+            <!--<li><a href="#" class="text-muted">Side map </a></li>-->
+            <!--<li><a href="#" class="text-muted">No map </a></li>-->
+            <!--<li><a href="#" class="text-muted">Room detail </a></li>-->
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+          <h6 class="text-uppercase text-dark mb-3">Pages</h6>
+          <ul class="list-unstyled">
+
+            <li><%= link_to "Contact", contact_us_path, class: "text-muted" %></li>
+            <li><%= link_to "Pricing", pricing_path, class: "text-muted" %></li>
+            <li><%= link_to "Terms & Conditions", terms_path, class: "text-muted" %></li>
+            <!--<li><a href="#" class="text-muted">F.A.Q.s  <span class="badge badge-info ml-1">New</span></a></li>-->
+            <!--<li><a href="#" class="text-muted">Coming soon </a></li>-->
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h6 class="text-uppercase text-dark mb-3">Join our emailing list and find out when special shows and events
+            are playing!</h6>
+          <!--<p class="mb-3"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. At itaque temporibus.</p>-->
+          <form action="#" id="newsletter-form">
+            <div class="input-group mb-3">
+              <input type="email" placeholder="Your Email Address" aria-label="Your Email Address" class="form-control bg-transparent border-dark border-right-0">
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-dark border-left-0">
+                  <i class="fa fa-paper-plane text-lg"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Copyright section of the footer-->
+  <div class="py-4 font-weight-light bg-gray-800 text-gray-300">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-left">
+          <p class="text-sm mb-md-0">&copy; 2020 Scatterwave. All rights reserved.</p>
+        </div>
+        <div class="col-md-6">
+          <ul class="list-inline mb-0 mt-2 mt-md-0 text-center text-md-right">
+            <li class="list-inline-item"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="w-2rem"></li>
+            <li class="list-inline-item"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="w-2rem"></li>
+            <li class="list-inline-item"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="w-2rem"></li>
+            <li class="list-inline-item"><img src="<%= asset_url('banner.jpg') %>" alt="..." class="w-2rem"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

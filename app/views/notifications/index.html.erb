@@ -1,0 +1,19 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="card border-0 shadow">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="container" id="notifications">
+            <div class="card-body m-4">
+              <% if @notifications.present? %>
+                  <%= render @notifications %>
+              <% else %>
+                  You havn't any notificaion(s).
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

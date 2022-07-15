@@ -1,0 +1,45 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div id="calendar" class="card p-4"></div>
+  </div>
+</section>
+
+<script>
+  window.bookings = <%= raw @events.to_json %>
+  console.log(bookings);
+
+  function showBookings(data) {
+    return data.map(function (e) {
+      if (e['date'] !== e['date']) {
+        e['date'] = moment.utc(e['date']).add(1, 'days')
+      }
+
+      return {
+        name: e.listing_name,
+        start: e['date'],
+        end: e['date'],
+        status: e.status
+      }
+    })
+  }
+
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'title',
+      center: '',
+      right: 'prev,next'
+    },
+    defaultDate: $('#date').val(),
+    events: showBookings(bookings),
+    eventRender: function(event, element, view) {
+      return $(`
+        <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end">
+          <div class="fc-content ${event.status}">
+            <span class="fc-title"> ${event.name}</span>
+          </div>
+        </a>
+      `);
+    }
+  });
+
+</script>

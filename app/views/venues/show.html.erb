@@ -1,0 +1,314 @@
+<section>
+  <div class="swiper-container detail-slider slider-gallery swiper-container-horizontal">
+    <div class="swiper-wrapper">
+      <% @photos.each do |photo| %>
+          <div class="swiper-slide swiper-slide-active" style="width: 453.667px;">
+            <a href="<%= photo.image.url() %>" data-toggle="gallery-top" title="Kitchen"><img src="<%= photo.image.url() %>" alt="Kitchen" class="img-fluid"></a>
+          </div>
+      <% end %>
+    </div>
+    <div class="swiper-pagination swiper-pagination-white swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-bullets-dynamic" style="width: 80px;">
+      <span class="swiper-pagination-bullet swiper-pagination-bullet-active swiper-pagination-bullet-active-main" style="left: 32px;" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active-next" style="left: 32px;" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active-next-next" style="left: 32px;" tabindex="0" role="button" aria-label="Go to slide 3"></span><span class="swiper-pagination-bullet" style="left: 32px;" tabindex="0" role="button" aria-label="Go to slide 4"></span><span class="swiper-pagination-bullet" style="left: 32px;" tabindex="0" role="button" aria-label="Go to slide 5"></span><span class="swiper-pagination-bullet" style="left: 32px;" tabindex="0" role="button" aria-label="Go to slide 6"></span>
+    </div>
+    <div class="swiper-button-prev swiper-button-white" tabindex="0" role="button" aria-label="Previous slide"></div>
+    <div class="swiper-button-next swiper-button-white" tabindex="0" role="button" aria-label="Next slide"></div>
+    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+  </div>
+</section>
+<div class="container py-5">
+  <div class="row">
+
+    <!--<div class="col-md-12">-->
+    <!--<%#= image_tag @venue.cover_photo(nil), width: "100%" %>-->
+    <!--</div>-->
+  </div>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="text-block">
+        <p class="text-primary"><i class="fas fa-map-marker-alt"></i> <%= @venue.address %></p>
+        <h1><%= @venue.listing_name %></h1>
+        <p class="text-muted text-uppercase mb-4">
+          <%= @venue.venue_type %>
+        </p>
+        <ul class="list-inline text-sm mb-4">
+          <li class="list-inline-item mr-3"><i class="fa fa-users mr-1 text-secondary"></i><%= @venue.venue_type %></li>
+          <li class="list-inline-item mr-3"><i class="fa fa-globe mr-1 text-secondary"></i><%= @venue.gig_type %>
+          </li>
+          <li class="list-inline-item mr-3">
+            <i class="fa fa-bed mr-1 text-secondary"></i>Capacity: <%= @venue.capacity %></li>
+        </ul>
+        <p class="text-muted font-weight-light"><%= @venue.summary %></p>
+      </div>
+      <!--<div class="text-block">-->
+      <!--<h4 class="mb-4">Hosted Genres</h4>-->
+      <!--<div class="row">-->
+      <!--<div class="col-md-4">-->
+      <!--<ul class="list-unstyled text-muted">-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_alternative %> mb-2">-->
+      <!--<span class="text-sm">Alternative</span></li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_americana %> mb-2"><span class="text-sm">Americana</span>-->
+      <!--</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_blues %> mb-2"><span class="text-sm">Blues</span></li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_christian %> mb-2"><span class="text-sm">Christian</span>-->
+      <!--</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_classical %> mb-2"><span class="text-sm">Classical</span>-->
+      <!--</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_comedy %> mb-2"><span class="text-sm">Comedy</span></li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--<div class="col-md-4">-->
+      <!--<ul class="genre">-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_country %>">Country</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_edm %>">EDM</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_electronic %>">Electronic</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_folk %>">Folk</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_hiphop %>">Hip Hop</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_jazz %>">Jazz</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--<div class="col-md-4">-->
+      <!--<ul class="genre">-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_latin %>">Latin</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_metal %>">Metal</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_pop %>">Pop</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_rb %>">R+B</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_rock %>">Rock</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_spokenword %>">Spoken Word</li>-->
+      <!--<li class="<%= 'text-line-through' if !@venue.is_world %>">World</li>-->
+      <!--</ul>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <div class="text-block">
+        <h4 class="mb-3">Hosted Genres</h4>
+        <ul class="list-inline">
+          <% [["is_alternative", "Alternative"], ["is_americana", "Americana"], ["is_blues", "Blues"],
+              ["is_christian", "Christian"], ["is_classical", "Classical"], ["is_comedy", "Comedy"],
+              ["is_country", "Country"], ["is_edm", "EDM"], ["is_electronic", "Electronic"],
+              ["is_folk", "Folk"], ["is_hiphop", "Hip Hop"], ["is_jazz", "Jazz"], ["is_latin", "Latin"],
+              ["is_metal", "Metal"], ["is_pop", "Pop"], ["is_rb", "R + B"], ["is_rock", "Rock"],
+              ["is_spokenword", "Spoken Word"], ["is_world", "World"]].each do |g| %>
+              <% if @venue.send("#{g[0]}".to_sym) %>
+                  <li class="list-inline-item mb-2">
+                    <span class="badge badge-pill badge-light p-3 text-muted font-weight-normal"><%= g[1] %></span></li>
+                  </li>
+              <% end %>
+          <% end %>
+        </ul>
+      </div>
+      <div class="text-block">
+        <h4 class="mb-3">Comments for band</h4>
+        <p class="text-muted font-weight-light"><%= @venue.comments %></p>
+      </div>
+      <div class="text-block">
+        <div class="media">
+          <%= image_tag avatar_url(@venue.user), class: "avatar avatar-lg mr-4" %>
+          <div class="media-body">
+            <p><span class="text-muted text-uppercase text-sm">Hosted by </span><br>
+              <strong>
+                <%= link_to user_path(@venue.user) do %>
+                    <%= @venue.user.fullname %>
+                <% end %>
+              </strong></p>
+            <p class="text-sm">
+              <%= link_to user_path(@venue.user) do %>
+                  See <%= @venue.user.fullname %>'s other listings <i class="fas fa-long-arrow-alt-right ml-2"></i>
+              <% end %></p>
+          </div>
+        </div>
+      </div>
+      <div class="text-block">
+        <h5 class="mb-4">Listing location</h5>
+        <div class="row m-0">
+
+          <div id="map" style="width: 100%; height: 400px"></div>
+
+<!--          <script src="https://maps.googleapis.com/maps/api/js"></script>-->
+          <script>
+              function initialize() {
+                  var location = {lat: <%= @venue.latitude %>, lng: <%= @venue.longitude %>};
+                  var map = new google.maps.Map(document.getElementById('map'), {
+                      center: location,
+                      zoom: 14
+                  });
+
+                  var marker = new google.maps.Marker({
+                      position: location,
+                      map: map
+                  });
+
+                  var infoWindow = new google.maps.InfoWindow({
+                      content: '<div id="content"><%= image_tag @venue.cover_photo(:medium) %></div>'
+                  });
+
+                  infoWindow.open(map, marker);
+              }
+
+              google.maps.event.addDomListener(window, 'load', initialize);
+          </script>
+
+        </div>
+        <!--<div class="map-wrapper-300 mb-3">-->
+        <!--<div id="detailMap" class="h-100"></div>-->
+        <!--</div>-->
+      </div>
+      <% if @photos.present? %>
+          <div class="text-block">
+            <h5 class="mb-4">Gallery</h5>
+            <div class="row gallery mb-3 ml-n1 mr-n1">
+              <% if @photos.length > 0 %>
+                  <% @photos.each do |photo| %>
+                      <div class="col-lg-4 col-6 px-1 mb-2">
+                        <a href="<%= photo.image.url() %>" data-fancybox="gallery" title="Our street"><img src="<%= photo.image.url() %>" alt="..." class="img-fluid"></a>
+                      </div>
+                  <% end %>
+              <% end %>
+            </div>
+          </div>
+      <% end %>
+      <div class="text-block">
+        <p class="subtitle text-sm text-primary">Reviews </p>
+        <div class="row">
+          <div class="col-md-12">
+            <!--<h5 class="mb-4">Listing Reviews </h5>-->
+            <div class="row">
+              <div class="col-md-3">
+                <h3>
+                  <%= pluralize(@guest_reviews.count, "Review") %>
+                </h3>
+              </div>
+              <div class="col-md-9">
+                <span id="average_rating1" class="d-star-rating" data-rating=<%= @venue.average_rating %>></span>
+              </div>
+            </div>
+
+
+            <div class="container">
+              <div><%= render "reviews/guest_list" %></div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="py-5">-->
+        <!--<button type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview" class="btn btn-outline-primary">Leave-->
+        <!--a review-->
+        <!--</button>-->
+        <!--<div id="leaveReview" class="collapse mt-4">-->
+        <!--<h5 class="mb-4">Leave a review</h5>-->
+        <!--<form id="contact-form" method="get" action="#" class="form">-->
+        <!--<div class="row">-->
+        <!--<div class="col-sm-6">-->
+        <!--<div class="form-group">-->
+        <!--<label for="name" class="form-label">Your name *</label>-->
+        <!--<input type="text" name="name" id="name" placeholder="Enter your name" required="required" class="form-control">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-sm-6">-->
+        <!--<div class="form-group">-->
+        <!--<label for="rating" class="form-label">Your rating *</label>-->
+        <!--<select name="rating" id="rating" class="custom-select focus-shadow-0">-->
+        <!--<option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>-->
+        <!--<option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>-->
+        <!--<option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>-->
+        <!--<option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>-->
+        <!--<option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<label for="email" class="form-label">Your email *</label>-->
+        <!--<input type="email" name="email" id="email" placeholder="Enter your  email" required="required" class="form-control">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<label for="review" class="form-label">Review text *</label>-->
+        <!--<textarea rows="4" name="review" id="review" placeholder="Enter your review" required="required" class="form-control"></textarea>-->
+        <!--</div>-->
+        <!--<button type="submit" class="btn btn-primary">Post review</button>-->
+        <!--</form>-->
+        <!--</div>-->
+        <!--</div>-->
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="pl-xl-4">
+        <!-- Opening Hours      -->
+        <% if @future_shows.present? %>
+
+            <div class="card border-0 shadow mb-5">
+              <div class="card-header bg-gray-100 py-4 border-0">
+                <div class="media align-items-center">
+                  <div class="media-body">
+                    <p class="subtitle text-sm text-primary">Future Shows</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <h3></h3>
+                <% @future_shows.each do |show| %>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p><%= show.date.strftime('%v') %></p>
+                        <small><%= show.start_time.strftime('%H:%M %P') %>
+                          - <%= show.end_time.strftime('%H:%M %P') %></small>
+                      </div>
+                      <div class="col-md-6">
+                      <span>
+                        <%= image_tag show.band.cover_picture(nil), class: "img-circle avatar-small" %>
+                        <%= link_to band_path(show.band) do %>
+                        <%= show.band.band_name %>
+                        <% end %>
+                      </span>
+                      </div>
+                    </div>
+                    <hr/>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+        <!-- Contact-->
+        <!--<div class="card border-0 shadow mb-5">-->
+        <div style="top: 100px;" class="p-4 shadow rounded sticky-top">
+          <%= render 'bookings/form' %>
+
+        </div>
+        <!--</div>-->
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<% if @venue.nearbys.present? %>
+    <div class="py-6 bg-gray-100">
+      <div class="container">
+        <h5 class="mb-0">Nearby Venues</h5>
+        <p class="subtitle text-sm text-primary mb-4">You may also like </p>
+        <div data-swiper="{&quot;slidesPerView&quot;:4,&quot;spaceBetween&quot;:20,&quot;loop&quot;:true,&quot;roundLengths&quot;:true,&quot;breakpoints&quot;:{&quot;1200&quot;:{&quot;slidesPerView&quot;:3},&quot;991&quot;:{&quot;slidesPerView&quot;:2},&quot;565&quot;:{&quot;slidesPerView&quot;:1}},&quot;pagination&quot;:{&quot;el&quot;:&quot;.swiper-pagination&quot;,&quot;clickable&quot;:true,&quot;dynamicBullets&quot;:true}}" class="swiper-container swiper-container-mx-negative swiper-init pt-3">
+          <div class="swiper-wrapper pb-5">
+            <%= render partial: "venues/venues", locals: {venues: @venue.nearbys(10)} %>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+<% end %>
+<script>
+    $('#average_rating').raty({
+        path: '/',
+        readOnly: true,
+        score: <%= @venue.average_rating %>
+    });
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 3,
+//        spaceBetween: 50,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        autoplay: {
+            delay: 5000,
+        },
+    });
+</script>

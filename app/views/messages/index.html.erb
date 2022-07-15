@@ -1,0 +1,49 @@
+<section class="chat bg-light space-2 mt-3">
+  <div class="container">
+    <div class="row row-broken">
+      <div class="col-md-4">
+        <div class="profile-card card p-4">
+          <div class="border-bottom mb-4 pb-4">
+            <%= image_tag avatar_url(@other)%>
+          </div>
+          <h2 class="h5 text-center mb-0"><%= @other.fullname %></h2>
+          <ul class="sidebar-list mb-0">
+            <li class="text-muted text-align-center mt-4"><%= link_to "View Profile", @other, class: "btn btn-default" %></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-8 chat">
+
+        <div class="chat-body clearfix" id="conversion-chat-box" data-conversion-id="<%= @conversation.id %>">
+          <div class="answer right reply mb-5 mb-lg-7">
+            <input id="conversation_id" type="hidden" value="<%= @conversation.id %>">
+            <div class="avatar">
+              <%= image_tag avatar_url(current_user) %>
+            </div>
+            <div class="name"><%= current_user.fullname %></div>
+            <div class="text">
+              <%= form_for [@conversation, @conversation.messages.new], remote: true do |f| %>
+                  <div class="form-group">
+                    <%= f.text_area :context, placeholder: "Add a personal message", class: "form-control" %>
+                  </div>
+                  <%= f.hidden_field :user_id, value: current_user.id %>
+                  <div>
+                    <%= f.submit "Send Message", class: "btn btn-secondary mt-2" %>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+          <div id="chat_<%= current_user.id %>">
+            <%= render @messages %>
+          </div>
+        </div>
+        <% if @messages.next_page.present? %>
+          <div class="set-see-more-message show-more-messages my-5 text-center">
+            <%= link_to "Show More Messages <i class='fa fa-sort'></i>".html_safe, more_messages_conversation_messages_path(@conversation, page: @messages.next_page, last: @messages.maximum(:id)), remote: true, class: "btn btn-secondary", title: "Show More Messages" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

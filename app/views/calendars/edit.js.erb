@@ -1,0 +1,5 @@
+$("#editCalendarBody").html("<%= j render 'form'  %>");
+$("#editCalendar").modal('show');
+$('.time-fields').timepicker({
+    startTime: '09:00:00'
+});

@@ -1,0 +1,10 @@
+$('#pictures').attr('data-pic-upload', "<%= @pictures.count %>").html("<%= j render 'pictures_list' %>")
+<% if @band.pictures.blank? %>
+  $('#picture_check').hide();
+<% end %>
+
+<% if !@band.active && !@band.summary.blank? && !@band.pictures.blank? && !@band.address.blank? %>
+    $('#publish_button').attr('disabled', false);
+<% else %>
+    $('#publish_button').attr('disabled', true);
+<% end %>

@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  band_type: MyString
+  band_genre: MyString
+  band_sec_genre: MyString
+  band_name: MyString
+  sound_link: MyString
+  face_link: MyString
+  spot_link: MyString
+  summary: MyText
+  address: MyString
+  active: false
+  user: one
+
+two:
+  band_type: MyString
+  band_genre: MyString
+  band_sec_genre: MyString
+  band_name: MyString
+  sound_link: MyString
+  face_link: MyString
+  spot_link: MyString
+  summary: MyText
+  address: MyString
+  active: false
+  user: two

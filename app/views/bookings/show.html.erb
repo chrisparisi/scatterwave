@@ -1,0 +1,179 @@
+<section style="background-image:url('<%= @booking.band.cover_picture(nil) %>');" class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover">
+  <div class="container overlay-content">
+    <div class="d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
+      <div class="text-white mb-4 mb-lg-0">
+        <div class="badge badge-pill badge-transparent px-3 py-2 mb-4"><%= @booking.venue.venue_type if @booking.venue.venue_type.present? %></div>
+        <div class="badge badge-pill badge-transparent px-3 py-2 mb-4"><%= @booking.band.band_genre if @booking.band.band_genre.present? %></div>
+        <h1 class="text-shadow verified"><%= @booking.band.band_name if @booking.band.band_name.present? %>
+          at <%= @booking.venue.listing_name %></h1>
+        <p><i class="fa-map-marker-alt fas mr-2"></i> <%= @booking.venue.address if @booking.venue.address.present? %>
+        </p>
+        <!--<p class="mb-0 d-flex align-items-center">-->
+        <!--<span id="average_rating"></span></p></n>-->
+        <!--8 Reviews-->
+      </div>
+      <!--<div class="calltoactions">-->
+      <!--<h2 class="h4 font-weight-bold text-white">Capacity: <%= @booking.venue.capacity %></h2>-->
+      <!--<h2 class="h4 font-weight-bold text-white">When:<%= @booking.date.strftime("%d %b %Y" "," "%H:%M %P") %></h2>-->
+      <!--</div>-->
+    </div>
+  </div>
+</section>
+<section class="py-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="text-block">
+          <ul class="list-inline text-sm mb-4">
+            <li class="list-inline-item mr-3"><i class="fa fa-users mr-1 text-secondary"></i> <%= @booking.venue.venue_type %></li>
+            <li class="list-inline-item mr-3"><i class="fa fa-music mr-1 text-secondary"></i> <%= @booking.band.band_genre %></li>
+          </ul>
+        </div>
+        <!-- About Listing-->
+        <div class="text-block">
+          <h3 class="mb-3">About</h3>
+          <p class="text-muted"> <%= @booking.band.summary %></p>
+        </div>
+        <div class="text-block">
+          <!-- Listing Location-->
+          <h3 class="mb-4">Location</h3>
+          <div class="map-wrapper-300 mb-3">
+            <!-- GOOGLE MAP -->
+            <div class="row">
+
+              <div id="map" style="width: 100%; height: 400px"></div>
+
+<!--              <script src="https://maps.googleapis.com/maps/api/js"></script>-->
+              <script>
+                  function initialize() {
+                      var location = {lat: <%= @booking.venue.latitude %>, lng: <%= @booking.venue.longitude %>};
+                      var map = new google.maps.Map(document.getElementById('map'), {
+                          center: location,
+                          zoom: 14
+                      });
+
+                      var marker = new google.maps.Marker({
+                          position: location,
+                          map: map
+                      });
+
+                      var infoWindow = new google.maps.InfoWindow({
+                          content: '<div id="content"><%= image_tag @booking.venue.cover_photo(:medium) %></div>'
+                      });
+
+                      infoWindow.open(map, marker);
+                  }
+
+                  google.maps.event.addDomListener(window, 'load', initialize);
+              </script>
+
+            </div>
+            <div id="detailMap" class="h-100"></div>
+          </div>
+        </div>
+        <% if @mucics.present? %>
+            <div class="text-block mt-6">
+              <h3 class="mb-4">Music</h3>
+              <%= render 'shared/player' %>
+              <% @musics.each do |music| %>
+                  <div class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading preview">
+                        <div class="row">
+                          <div class="col-md-1 mb-2">
+                            <%= image_tag 'play-button.png', style: ' border-radius: 25px;max-height: 25px; object-fit:contain;', data: {mid: music.id, name: music.music_file_name, url: music.music.url}, class: 'smart-play' %>
+                          </div>
+                          <div class="col-md-11 text-muted">
+                            <%= music.music_file_name %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+      <div class="col-lg-4">
+        <div class="pl-xl-4">
+          <!-- Opening Hours      -->
+          <div class="card border-0 shadow mb-5">
+            <div class="card-header bg-gray-100 py-4 border-0">
+              <div class="media align-items-center">
+                <div class="media-body">
+                  <p class="subtitle text-sm text-primary">Shows</p>
+                  <!--<h4 class="mb-0">Shows </h4>-->
+                </div>
+                <svg class="svg-icon svg-icon svg-icon-light w-3rem h-3rem ml-3 text-muted">
+                  <use xlink:href="#wall-clock-1"></use>
+                </svg>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <table class="table text-sm mb-0">
+                <tr>
+                  <th class="pl-0 border-0">Capacity:</th>
+                  <td class="pr-0 text-right border-0"><%= @booking.venue.capacity %></td>
+                </tr>
+                <tr>
+                  <th class="pl-0">Time</th>
+                  <td class="pr-0 text-right"><%= @booking.date.strftime("%d %b %Y") %>,<%= @booking.start_time.strftime("%H:%M %P") %></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <!-- Contact-->
+          <!--<div class="card border-0 shadow mb-5">-->
+            <!--<div class="card-header bg-gray-100 py-4 border-0">-->
+              <!--<div class="media align-items-center">-->
+                <!--<div class="media-body">-->
+                  <!--<p class="subtitle text-sm text-primary">Drop Us a Line</p>-->
+                  <!--<h4 class="mb-0">Contact</h4>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="card-body">-->
+              <!--<ul class="list-unstyled mb-4">-->
+                <!--<li class="mb-2">-->
+                  <!--<i class="fas fa-store mr-3"></i><span class="text-muted"><%= @booking.venue.venue_type %></span></li>-->
+                <!--<li class="mb-2">-->
+                  <!--<i class="fa fa-music mr-3"></i><span class="text-muted"><%= @booking.band.band_genre %></span></li>-->
+              <!--</ul>-->
+              <!--<% if current_user.present? %>-->
+                  <!--<div class="text-center">-->
+                    <!--<%= link_to conversations_path(sender_id: current_user.id, recipient_id: @booking.venue.user.id), method: :post, class: "btn btn-outline-primary btn-block" do %>-->
+                        <!--<i class="far fa-paper-plane mr-2"></i>Send a Message-->
+                    <!--<% end %>-->
+                  <!--</div>-->
+              <!--<% end %>-->
+            <!--</div>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="py-6 bg-gray-100">
+  <div class="container">
+    <h5 class="mb-0">Nearby Venues</h5>
+    <p class="subtitle text-sm text-primary mb-4">You may also like </p>
+    <!-- Slider main container-->
+    <div class="swiper-container swiper-container-mx-negative items-slider">
+      <!-- Additional required wrapper-->
+      <div class="swiper-wrapper pb-5">
+        <%= render partial: "venues/venues", locals: {venues: @booking.venue.nearbys(10)} %>
+
+      </div>
+      <!-- If we need pagination-->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .panel-default .panel-heading {
+    color: black;
+    background-color: white;
+  }
+</style>

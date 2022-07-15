@@ -1,0 +1,65 @@
+<div style="height: 8px;" class="progress rounded-0 sticky-top">
+  <div role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div>
+</div>
+<section class="py-5">
+  <div class="container">
+    <p class="subtitle text-primary">Add new Venue</p>
+    <h1 class="h2 mb-5"> Photos <span class="text-muted float-right">Step 4</span></h1>
+    <div class="row form-block">
+      <div class="col-lg-4">
+        <h4>Photos</h4>
+        <p class="text-muted text-sm">Post pics of your venue!Photos of your seating and stage area are not neccessary but very
+        helpful for bands.Any pictures you want your patrons or bands to see are great here.</p>
+      </div>
+      <div class="col-lg-7 ml-auto">
+        <div class="form-group">
+          <%= form_for @venue, url: venue_photos_path(@venue), method: 'post', html: {multipart: true} do |f| %>
+
+              <div class="row">
+                <div class="col-sm-12 form-group">
+                    <span class="btn btn-default btn-file text-babu dropzone dz-clickable">
+                      <i class="fa fa-cloud-upload" aria-hidden="true"></i> Select Photos
+                      <%= file_field_tag "images[]", type: :file, multiple: true %>
+                    </span>
+                </div>
+              </div>
+              <%= f.submit "Add Photos", class: "btn btn-primary float-right" %>
+          <% end %>
+          <div id="photos" data-pic-upload="<%= @photos.count %>" ><%= render 'photos/photos_list' %></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row form-block flex-column flex-sm-row">
+      <div class="col text-center text-sm-left">
+        <%= link_to description_venue_path, class: "btn btn-link text-muted" do %>
+            <i class="fa-chevron-left fa mr-2"></i>Back
+        <% end %>
+      </div>
+      <div class="col text-center text-sm-right">
+        <% is_ready = !@venue.payout.blank? && !@venue.listing_name.blank? && !@venue.photos.blank? %>
+
+        <%= form_for @venue do |f| %>
+            <%= f.hidden_field :active, value: current_user.merchant_id.present? ? true : false %>
+            <%= f.submit "Publish", id: "publish_button", class: "btn btn-primary px-3", disabled: !is_ready %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+    $('.next').click(function () {
+
+        var name = $('#images_').val();
+
+        if (name.length < 1 && ($("#photos").attr('data-pic-upload') == "0")) {
+            alert('Select some image.');
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    });
+</script>

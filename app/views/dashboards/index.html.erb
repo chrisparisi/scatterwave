@@ -1,0 +1,71 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <div class="profile-card card p-4">
+          <div class="border-bottom mb-4 pb-4">
+            <%= image_tag avatar_url(current_user)%>
+          </div>
+          <h2 class="h5 text-center mb-0"><%= current_user.fullname %></h2>
+          <ul class="sidebar-list mb-0">
+            <% if current_user.confirmation_token %>
+                <li class="text-muted text-align-center mt-4"><i class="fa fa-check-circle-o mr-1"></i>Verified Email Address</li>
+            <% end %>
+            <% if current_user.provider %>
+                <li class="text-muted text-align-center mt-4"><i class="fa fa-check-circle-o  mr-1"></i>Verified Facebook</li>
+            <% end %>
+            <% if current_user.phone_verified %>
+                <li class="text-muted text-align-center mt-4"><i class="fa fa-check-circle-o  mr-1"></i>Phone number Verified</li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card mb-3">
+          <h2 class="h6 mb-2 card-header pt-4 pb-3 px-0 mx-4">Notifications</h2>
+          <div class="card-body">
+            <div class="no-padding">
+              <%= link_to notifications_path do %>
+                  You have <span id="num_of_unread"><%= current_user.unread %></span> notification(s).
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <% if current_user.account_type == "Band" %>
+          <div class="card mb-4">
+            <h2 class="h6 mb-2 card-header pt-4 pb-3 px-0 mx-4">Your Band</h2>
+            <div class="row card-body">
+              <% if @band.blank? %>
+                  <div class="m-4">
+                    <h3>You haven't created a band!</h3></br>
+                    <%= link_to "Start a band and book some gigs!", new_band_path, class: "btn btn-primary" %>
+                  </div>
+              <% else %>
+                  <div class="col-lg-6 col-md-6 col-sm-6 mb-5 hover-animate">
+                    <%= render partial: "bands/band", locals: {band: @band} %>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <% if current_user.account_type == "Venue" %>
+          <div class="card mb-4">
+            <h2 class="h6 mb-2 card-header pt-4 pb-3 px-0 mx-4">Your Venues (<%= @venues.length %>)</h2>
+            <div class="row card-body">
+              <% if @venues.present? %>
+                <%= render partial: "venues/venues_list", locals: {venues: @venues} %>
+                <%#= render partial: "venues/venues", locals: {venues: @venues} %>
+              <% else %>
+                <div class="m-4">
+                  <h3>You don't have any venue yet!</h3></br>
+                  <%= link_to "Create venue and host some shows!", new_venue_path, class: "btn btn-primary" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

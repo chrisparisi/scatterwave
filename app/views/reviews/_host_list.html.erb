@@ -1,0 +1,28 @@
+<% if @host_reviews.count == 0 %>
+    <div class="text-center mt-5">
+      <h4 class="text-muted">There are no reviews.</h4>
+    </div>
+<% else %>
+
+    <% @host_reviews.order(id: :desc).each do |r| %>
+        <div class="media d-block d-sm-flex review">
+          <div class="text-md-center mr-4 mr-xl-5">
+            <%= image_tag avatar_url(r.host), class: "d-block avatar avatar-xl p-2 mb-2" %>
+            <span class="text-uppercase text-muted text-sm"><%= r.created_at.strftime("%v") %></span></div>
+          <div class="media-body">
+            <h6 class="mt-2 mb-1"><%= r.host.fullname %></h6>
+            <div class="mb-2">
+              <span class="d-star-rating" data-rating=<%= r.star %> ></span>
+            </div>
+            <p class="text-muted text-sm"><%= r.comment %>
+              <% if current_user && current_user == r.host %>
+            <span class="pull-right">
+              <%= link_to r, method: :delete, data: {confirm: "Are you sure?"} do %>
+                  <i class="fa fa-trash-o fa-lg"></i>
+              <% end %>
+            </span>
+              <% end %></p>
+          </div>
+        </div>
+    <% end %>
+<% end %>

@@ -1,0 +1,31 @@
+<div class="swiper-slide h-auto px-2">
+  <!-- place item-->
+  <div data-marker-id="59c0c8e33b1527bfe2abaf92" class="w-100 h-100 hover-animate listing booking-list">
+    <div class="card h-100 border-0 shadow">
+      <div class="card-img-top overflow-hidden gradient-overlay">
+        <%= image_tag show.band.cover_picture(:medium), class: "img-fluid" %>
+        <a href="<%= booking_path(show) %>" class="tile-link"></a>
+        <div class="card-img-overlay-bottom z-index-20">
+          <div class="media text-white text-sm align-items-center">
+            <%= image_tag avatar_url(show.band.user), class: "avatar avatar-border-white mr-2" %>
+            <div class="media-body"><%= show.band.user.fullname %></div>
+          </div>
+        </div>
+        <!--<div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+          <!--<svg class="svg-icon text-white">-->
+            <!--<use xlink:href="#heart-1"> </use>-->
+          <!--</svg></a></div>-->
+      </div>
+      <div class="card-body d-flex align-items-center">
+        <div class="w-100">
+          <h6 class="card-title">
+            <%= link_to show.band.band_name, show, class: "text-decoration-none text-dark" %>
+          </h6>
+          <div class="d-flex card-subtitle mb-3">
+            <p class="flex-grow-1 mb-0 text-muted text-sm"> at <%= show.venue.listing_name %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

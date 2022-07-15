@@ -1,0 +1,51 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <% if @conversations.present? %>
+        <div class="card">
+          <div class="card-header pt-4 pb-3 px-0 mx-4">
+            <h2 class="h6 mb-0">
+              Your Conversations
+            </h2>
+          </div>
+          <div class="card-body">
+            <% @conversations.each do |conversation| %>
+                <% other = current_user == conversation.sender ? conversation.recipient : conversation.sender %>
+                <%= link_to conversation_messages_path(conversation) do %>
+                    <div class="media align-items-center mb-4">
+                      <% if conversation.messages.any? %>
+                          <!-- Avatar -->
+                          <div class="u-avatar position-relative mr-3">
+                            <%= image_tag avatar_url(other), class: "img-circle avatar-medium" %>
+                          </div>
+                          <!-- End Avatar -->
+
+                          <div class="media-body">
+                            <h1 class="h6 text-dark mb-0">
+                              <%= other.fullname %>
+                            </h1>
+                            <p class="text-muted m-0"><%= conversation.messages.last.context %></p>
+                          </div>
+
+                          <div class="align-self-start ml-auto">
+                            <!-- Bookmark -->
+                            <small class="text-muted">
+                              <%= conversation.messages.last.message_time %>
+                            </small>
+                            <!-- End Bookmark -->
+                          </div>
+                      <% end %>
+                    </div>
+                    <hr/>
+                <% end %>
+            <% end %>
+          </div>
+        </div>
+    <% else %>
+        <div class="card">
+          <div class="card-header pt-4 pb-3 px-0 mx-4">
+            <h4 class="h6 mb-0">You not have any conversations yet.</h4>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+<% if @guest_reviews.count == 0 %>
+    <div class="">
+      <h4>There are no reviews.</h4>
+    </div>
+<% else %>
+
+    <% @guest_reviews.order(id: :desc).each do |r| %>
+        <div class="media d-block d-sm-flex review">
+          <div class="text-md-center mr-4 mr-xl-5">
+            <%= image_tag avatar_url(r.guest), class: "d-block avatar avatar-xl p-2 mb-2" %>
+            <span class="text-uppercase text-muted text-sm"><%= r.created_at.strftime("%v") %></span></div>
+          <div class="media-body">
+            <h6 class="mt-2 mb-1"><%= r.guest.fullname %></h6>
+            <div class="mb-2">
+              <span class="d-star-rating" data-rating=<%= r.star %> ></span>
+            </div>
+            <p class="text-muted text-sm"><%= r.comment %></p>
+          </div>
+        </div>
+    <% end %>
+<% end %>

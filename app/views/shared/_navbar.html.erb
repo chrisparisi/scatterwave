@@ -1,0 +1,137 @@
+<header class="header">
+  <nav class="navbar navbar-expand-lg shadow <%= inner_page? ? '' : 'fixed-top' %>  navbar-light bg-white" style="margin-bottom: 0px">
+    <div class="container">
+      <div class="d-flex align-items-center">
+        <%= link_to root_path, class: "navbar-brand py-1 text-secondary logo" do %>
+            <%= image_tag "logo.png"%>
+        <% end %>
+<!--        <form action="#" id="search" class="form-inline d-none d-sm-flex">-->
+<!--          <div class="input-label-absolute input-label-absolute-left input-reset input-expand ml-lg-2 ml-xl-3">-->
+<!--            <label for="search_search" class="label-absolute"><i class="fa fa-search"></i><span class="sr-only">What are you looking for?</span></label>-->
+<!--            <input id="search_search" placeholder="Search" aria-label="Search" class="form-control form-control-sm border-0 shadow-0 bg-gray-200">-->
+<!--            <button type="reset" class="btn btn-reset btn-sm"><i class="fa-times fas"></i></button>-->
+<!--          </div>-->
+<!--        </form>-->
+      </div>
+      <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">
+        <i class="fa fa-bars"></i></button>
+      <!-- Navbar Collapse -->
+      <div id="navbarCollapse" class="collapse navbar-collapse">
+        <form action="#" id="searchcollapsed" class="form-inline mt-4 mb-2 d-sm-none">
+          <div class="input-label-absolute input-label-absolute-left input-reset w-100">
+            <label for="searchcollapsed_search" class="label-absolute"><i class="fa fa-search"></i><span class="sr-only">What are you looking for?</span></label>
+            <input id="searchcollapsed_search" placeholder="Search" aria-label="Search" class="form-control form-control-sm border-0 shadow-0 bg-gray-200">
+            <button type="reset" class="btn btn-reset btn-sm"><i class="fa-times fas"> </i></button>
+          </div>
+        </form>
+        <ul class="navbar-nav ml-auto">
+          <% if (!user_signed_in?) %>
+              <li class="nav-item"><%= link_to "Login", new_user_session_path, class: "nav-link" %></li>
+              <li class="nav-item"><%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %></li>
+          <% else %>
+              <li class="nav-item">
+                <%= link_to notifications_path, class: "nav-link" do %>
+
+                    <i class="fa fa-bell fa-2x icon-babu" style="color:<%= current_user.unread > 0 ? "navy" : "gray" %>"></i>
+                    <span class="badge" id="navbar_num_of_unread" style="color:<%= current_user.unread > 0 ? "navy" : "gray" %>"><%= current_user.unread if current_user.unread > 0 %></span>
+                <% end %>
+              </li>
+              <li class="nav-item dropdown">
+                <a id="homeDropdownMenuLink" href="#" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle active py-0">
+                  <%= image_tag avatar_url(current_user), class: "avatar avatar-sm avatar-border-white mr-1" %>&nbsp;
+                  <%= current_user.fullname %> <span class="caret"></span>
+                </a>
+                <div aria-labelledby="homeDropdownMenuLink" class="dropdown-menu">
+                  <%= link_to "Dashboard", dashboard_path, class: "dropdown-item" %>
+                  <%= link_to "Messages", conversations_path, class: "dropdown-item" %>
+
+                  <% if current_user.account_type == "Band" %>
+                    <%= link_to "Manage Band", bands_path, class: "dropdown-item" %>
+                    <%= link_to "Create/Edit Band", new_band_path, class: "dropdown-item" %>
+                    <%= link_to "Your Tours", your_tours_path, class: "dropdown-item" %>
+                  <% elsif current_user.account_type == "Venue" %>
+                    <%= link_to "Manage Venues", venues_path, class: "dropdown-item" %>
+                    <%= link_to "Create Venue", new_venue_path, class: "dropdown-item" %>
+                    <%= link_to "Your Venue's Shows", your_bookings_path, class: "dropdown-item" %>
+                  <% end %>
+                  <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
+                  <%= link_to "Log out", destroy_user_session_path, class: "dropdown-item", method: :delete %>
+                </div>
+              </li>
+          <% end %>
+          <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+            <%= link_to "List Your Band", new_band_path, class: "btn btn-primary" %>
+          </li>
+          <li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+            <%= link_to "List Your Venue", new_venue_path, class: "btn btn-primary" %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- /Navbar -->
+</header>
+
+<% if inner_page? %>
+    <div class="bg-primary dashboard-menu">
+      <div class="container py-2">
+        <div class="d-flex justify-content-lg-between align-items-center ">
+          <div class="z-index-4 w-100">
+            <div class="col-lg-5 order-lg-2 text-lg-right mb-0 mb-lg-0 d-lg-none">
+              <div class="d-flex d-lg-inline-block justify-content-between justify-content-lg-end align-items-center align-items-lg-start">
+                <div class="d-lg-none">
+                  <button type="button" data-toggle="collapse" data-target="#breadcrumbNavBar" aria-controls="breadcrumbNavBar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right text-white">
+                    <i class="fa fa-bars"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="bg-transparent">
+              <nav class="navbar navbar-expand-lg p-0">
+                <div id="breadcrumbNavBar" class="collapse navbar-collapse u-header__navbar-collapse">
+                  <ul class="navbar-nav u-header__navbar-nav">
+                    <li class="nav-item"
+                        <% if current_page?(dashboard_path) %> class="active"
+                        <% end %> ><%= link_to "Dashboard", dashboard_path, class:"nav-link" %></li>
+                    <li class="nav-item"
+                        <% if current_page?(conversations_path) %> class="active"
+                        <% end %> ><%= link_to "Messages", conversations_path, class:"nav-link" %></li>
+                    <% if current_user.account_type == "Band" %>
+                        <li class="nav-item"
+                            <% if current_page?(bands_path) %> class="active"
+                            <% end %> ><%= link_to "Manage Band", bands_path, class:"nav-link" %></li>
+                        <li class="nav-item"
+                            <% if current_page?(guest_calendar_path) %> class="active"
+                            <% end %> ><%= link_to "Tour Calendar", guest_calendar_path, class:"nav-link" %></li>
+                        <li class="nav-item"
+                            <% if current_page?(revenues_path) %> class="active"
+                            <% end %> ><%= link_to "Band Revenue", revenues_path, class:"nav-link" %></li>
+                    <% elsif current_user.account_type == "Venue" %>
+                        <li class="nav-item"
+                            <% if current_page?(venues_path) %> class="active"
+                            <% end %> ><%= link_to "Manage Venues", venues_path, class:"nav-link" %></li>
+                        <li class="nav-item"
+                            <% if current_page?(host_calendar_path) %> class="active"
+                            <% end %> ><%= link_to "Venue Calendar", host_calendar_path, class:"nav-link" %></li>
+                    <% end %>
+                    <li class="nav-item"
+                        <% if current_page?(payment_method_path) %> class="active"
+                        <% end %> ><%= link_to "Account Settings", edit_user_registration_path, class:"nav-link" %></li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </div>
+          <div class="ml-lg-auto">
+            <%= link_to "Swith to #{current_user.account_type == 'Venue' ? 'Band' : 'Venue'} <i class='fa fa-chevron-right ml-2'></i>".html_safe, switch_accounts_path, class: "dropdown-item text-white font-weight-bold py-2 px-3 rounded", style: "background:#ff6318;" %>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<style>
+  .dropdown-menu{
+    z-index: 9999;
+  }
+</style>

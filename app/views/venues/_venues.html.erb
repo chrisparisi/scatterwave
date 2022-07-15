@@ -1,0 +1,5 @@
+<% if venues.present? %>
+    <% venues.each do |venue| %>
+        <%= render "venues/venue", venue: venue %>
+    <% end %>
+<% end %>

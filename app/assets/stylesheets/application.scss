@@ -1,0 +1,396 @@
+
+@import "variable";
+@import "fullcalendar";
+@import "player/player";
+
+
+
+
+@import "scatterwave/nouislider.min";
+@import "scatterwave/swiper.min";
+@import "scatterwave/magnific-popup";
+@import "scatterwave/style.default.min";
+
+
+@import "home";
+@import "pages";
+@import "dashboard";
+@import "venue";
+@import "band";
+@import "search";
+@import "chat";
+@import "toastr";
+
+
+// NAVBARS
+.navbar-default {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.navbar-default .navbar-brand {
+  color: #00a9ff;
+  font-size: 2em;
+  font-weight: 400;
+}
+
+.btn.btn-default {
+  width: 100%;
+  border-color: #c4c4c4;
+  background: white;
+  color: #484848;
+  border-radius: 2px;
+  padding: 10px 0;
+  margin-top: 10px;
+}
+
+.btn.btn-form:active {
+  outline: none;
+  border-color: #00a9ff;
+  background-color: #00a9ff;
+}
+
+.btn.btn-facebook {
+  border: 1px solid #3B5998;
+  background-color: #3B5998;
+}
+
+.btn.btn-facebook:active {
+  outline: none;
+  border-color: #2d467b;
+  background-color: #2d467b;
+}
+
+// PANELS
+.panel-default .panel-heading {
+  color: #ffffff;
+  background-color: #FF784F;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.row-space-1 {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.row-space-2 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.row-space-3 {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.description {
+  color: #575757;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 25px;
+}
+
+// AVATAR
+.avatar-small {
+  width: 28px;
+}
+
+.avatar-medium {
+  width: 48px;
+}
+
+.avatar-large {
+  width: 68px;
+}
+
+.avatar-full {
+  width: 100%;
+}
+
+// FORMS
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group input[type="radio"] {
+  height: 15px;
+  margin-right: 10px;
+}
+
+.btn-group label {
+  margin-right: 15px;
+}
+
+.form-group input[type="checkbox"] {
+  height: 1.25em;
+  width: 1.25em;
+  margin-bottom: -0.25em;
+  margin-right: 5px;
+  vertical-align: top;
+  border: 1px solid #FF784F;
+  border-radius: 2px;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.form-group input[type="checkbox"]:checked:before {
+  content: '\2713';
+  position: absolute;
+  font-size: 0.95em;
+  text-align: center;
+  width: 1.25em;
+  color: #FF784F;
+}
+// SIDEBAR
+.sidebar-list {
+  padding-left: 0;
+  list-style: none;
+}
+.sidebar-link {
+  color: #82888a;
+  text-decoration: none;
+  padding: 10px 0;
+  display: inline-block;
+  line-height: 100%;
+}
+
+.sidebar-link:hover, .sidebar-link:focus {
+  color: #CACCCD;
+  text-decoration: none;
+}
+
+.active.sidebar-link {
+  color:#002776;
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 3px solid #002776;
+}
+
+// PHOTO UPLOAD
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.panel-heading.preview {
+  padding: 0;
+}
+
+.panel-heading.preview img {
+  width: 100%;
+}
+
+// VENUE SHOW
+.genre li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  list-style-type: none;
+}
+
+.genre .text-line-through {
+  text-decoration: line-through;
+  color: rgba(0,0,0,0.45);
+  font-size: 14px;
+}
+
+// BOOKINGS
+.booking-table td {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #dce0e0;
+  padding: 10px;
+}
+
+.booking-table .total td {
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+}
+
+.form-control.datepicker {
+  color: #00a9ff;
+  background-color: white;
+  border: 1px solid #00a9ff;
+  text-align: center;
+}
+
+.form-control.timepicker {
+  color: #00a9ff;
+  background-color: white;
+  border: 1px solid #00a9ff;
+  text-align: center;
+}
+
+// SEARCH
+#main {
+  height: 100%;
+  overflow: hidden;
+}
+
+#left {
+  padding: 10px 400px 10px 20px;
+  overflow: scroll;
+  height: 100%;
+}
+
+#right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 450px;
+  height: 100%;
+}
+
+.map_payout {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #00a9ff;
+}
+
+// CALENDAR
+.fc-content.Waiting {
+  background-color: #C9CC6D;
+}
+
+.fc-past {
+  background-color: lightgray;
+}
+
+.fc-day {
+  position: relative;
+}
+
+.fc-content {
+  background-color: #00a9ff;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.fc-event {
+  border: 0px;
+  background-color: transparent;
+}
+
+.fc-title {
+  font-size: 14px;
+  position: relative;
+  top: 7px;
+  left: 20px;
+}
+
+.day-payout {
+  position: absolute;
+  color: #EAA90B;
+  bottom: 2px;
+  right: 2px;
+}
+
+// PAYMENT FORM
+
+#add-card form {
+  width: 480px;
+  margin: 20px auto;
+}
+
+#add-card label {
+  position: relative;
+  color: #6A7C94;
+  font-weight: 400;
+  height: 48px;
+  line-height: 48px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+#add-card label > span {
+  float: left;
+}
+
+.field {
+  background: white;
+  box-sizing: border-box;
+  font-weight: 400;
+  border: 1px solid #CFD7DF;
+  border-radius: 24px;
+  color: #32315E;
+  outline: none;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 20px;
+  cursor: text;
+  width: 76%;
+  float: right;
+}
+
+.field::-webkit-input-placeholder { color: #CFD7DF; }
+.field::-moz-placeholder { color: #CFD7DF; }
+.field:-ms-input-placeholder { color: #CFD7DF; }
+
+.field:focus,
+.field.StripeElement--focus {
+  border-color: #F99A52;
+}
+
+#add-card button {
+  float: left;
+  display: block;
+  background-image: linear-gradient(-180deg, #F8B563 0%, #F99A52 100%);
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.10), inset 0 -1px 0 0 #E57C45;
+  color: white;
+  border-radius: 24px;
+  border: 0;
+  margin-top: 20px;
+  font-size: 17px;
+  font-weight: 500;
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  outline: none;
+}
+
+#add-card button:focus {
+  background: #EF8C41;
+}
+
+#add-card button:active {
+  background: #E17422;
+}
+
+.outcome {
+  float: left;
+  width: 100%;
+  padding-top: 8px;
+  min-height: 20px;
+  text-align: center;
+}
+
+.success, .error {
+  display: none;
+  font-size: 13px;
+}
+
+.success.visible, .error.visible {
+  display: inline;
+}
+
+.error {
+  color: #E4584C;
+}

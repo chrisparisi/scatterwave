@@ -1,0 +1,43 @@
+<ul class="sidebar-list">
+  <li class="sidebar-item">
+    <%= link_to "Band Info", listing_band_path, class: "sidebar-link active" %>
+    <span class="pull-right text-babu"><i class="fa fa-check"></i></span>
+  </li>
+  <li class="sidebar-item">
+    <%= link_to "Social Media", social_media_band_path, class: "sidebar-link active" %>
+    <span class="pull-right text-babu"><i class="fa fa-check"></i></span>
+  </li>
+  <li class="sidebar-item">
+    <%= link_to "Description", description_band_path, class: "sidebar-link active" %>
+    <% if !@band.summary.blank? %>
+    <span class="pull-right text-babu"><i class="fa fa-check"></i></span>
+    <% end %>
+  </li>
+  <li class="sidebar-item">
+    <%= link_to "Photos", band_pic_upload_band_path, class: "sidebar-link active" %>
+    <% if !@band.pictures.blank? %>
+    <span id="picture_check" class="pull-right text-babu"><i class="fa fa-check"></i></span>
+    <% end %>
+  </li>
+
+  <li class="sidebar-item">
+    <%= link_to "Musics", band_music_upload_band_path, class: "sidebar-link active" %>
+    <% if !@band.band_musics.blank? %>
+        <span id="music_check" class="pull-right text-babu"><i class="fa fa-check"></i></span>
+    <% end %>
+  </li>
+  <li class="sidebar-item">
+    <%= link_to "Hometown", location_band_path, class: "sidebar-link active" %>
+    <% if !@band.address.blank? %>
+    <span class="pull-right text-babu"><i class="fa fa-check"></i></span>
+    <% end %>
+  </li>
+</ul>
+<hr/>
+
+<% is_ready = !@band.active && !@band.summary.blank? && !@band.pictures.blank? && !@band.address.blank? %>
+
+<%= form_for @band do |f| %>
+  <%= f.hidden_field :active, value: current_user.merchant_id.present? ? true : false %>
+  <%= f.submit "Publish", id: "publish_button", class: "btn btn-primary btn-block", disabled: !is_ready %>
+<% end %>

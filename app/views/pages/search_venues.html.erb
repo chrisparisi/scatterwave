@@ -1,0 +1,385 @@
+<!--<div id="main">-->
+  <!--<div class="container-fluid">-->
+    <div class="row">
+      <div class="col-lg-8 py-5 p-xl-5">
+        <%= simple_form_for @search, :as => :search, url: search_venues_path, method: :get, remote: true do |f| %>
+            <div class="row">
+
+              <div class="col-xl-4 col-md-6 mb-4">
+                <label for="date" class="form-label">Date to perform on</label>
+                <div class="datepicker-container datepicker-container-left">
+                  <!--<input type="text" name="bookingDate" id="form_dates" placeholder="Choose your dates" class="form-control">-->
+                  <%= f.text_field :date, placeholder: "Choose your dates", class: "form-control", id: "date" %>
+                </div>
+              </div>
+
+              <div class="col-xl-4 col-md-6 mb-4">
+                <label for="searchvenuelocation" class="form-label">Location</label>
+                <%= f.text_field :location, placeholder: "Where do you want to book a gig at?", class: "form-control", id: "searchvenuelocation" %>
+                <!--<select name="guests" id="form_guests" data-style="btn-selectpicker" title=" " class="selectpicker form-control">-->
+                <!--<option value="guests_0">1    </option>-->
+                <!--<option value="guests_1">2    </option>-->
+                <!--<option value="guests_2">3    </option>-->
+                <!--<option value="guests_3">4    </option>-->
+                <!--<option value="guests_4">5    </option>-->
+                <!--</select>-->
+              </div>
+
+              <div class="col-xl-4 col-md-6 mb-4">
+                <label for="capacity" class="form-label">Capacity</label>
+                <%= f.select :capacity, [["50", 50], ["100", 100], ["150", 150], ["200", 200], ["500+", 500]],{prompt: "Select..."}, {id: "capacity", class: "selectpicker form-control", "data-style" =>"btn-selectpicker"} %>
+                <!--<select name="type" id="form_type" multiple data-style="btn-selectpicker" title="" class="selectpicker form-control">-->
+                <!--<option value="type_0">Entire place    </option>-->
+                <!--<option value="type_1">Private room    </option>-->
+                <!--<option value="type_2">Shared room    </option>-->
+                <!--</select>-->
+              </div>
+
+              <div class="col-12 pb-4">
+                <div id="moreFilters" class="collapse">
+                  <div class="filter-block">
+                    <div class="row">
+                    <div class="col-xl-4 col-md-6 mb-4">
+                      <label class="form-label">Price range</label>
+                      <div id="slider-snap" class="text-primary"></div>
+                      <div class="nouislider-values">
+                        <div class="min">From $<span id="slider-snap-value-from"></span></div>
+                        <div class="max">To $<span id="slider-snap-value-to"></span></div>
+                      </div>
+
+                      <%= f.hidden_field :min_payout, id: "slider-snap-input-from"  %>
+                      <%= f.hidden_field :max_payout, id: "slider-snap-input-to"  %>
+                    </div>
+                    <div class="col-xl-4 col-md-6 mb-4">
+                      <label for="gigType" class="form-label">Gig type</label>
+                      <%= f.select :gig_type, ["Live", "Competition", "Licensing"], {include_blank: false}, {id: "gigType", class: "selectpicker form-control", "data-style" =>"btn-selectpicker", multiple: true} %>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+<!--                      <label for="name" class="form-label">name</label>-->
+                      <%#= f.text_field :name, placeholder: "Where do you want to find local bands at?", class: "form-control", id: "searchvenuename" %>
+                    </div>
+                    </div>
+                    <h6 class="mb-3">Hosted Genres</h6>
+                    <ul class="list-inline mb-0">
+                      <% [["is_alternative", "Alternative"], ["is_americana", "Americana"], ["is_blues", "Blues"],
+                          ["is_christian", "Christian"], ["is_classical", "Classical"], ["is_comedy", "Comedy"],
+                          ["is_country", "Country"], ["is_edm", "EDM"], ["is_electronic", "Electronic"],
+                          ["is_folk", "Folk"], ["is_hiphop", "Hip Hop"], ["is_jazz", "Jazz"], ["is_latin", "Latin"],
+                          ["is_metal", "Metal"], ["is_pop", "Pop"], ["is_rb", "R + B"], ["is_rock", "Rock"],
+                          ["is_spokenword", "Spoken Word"], ["is_world", "World"]].each do |g| %>
+                          <li class="list-inline-item">
+                            <div class="custom-control custom-checkbox">
+                              <%= f.check_box :genres, { :multiple => true, id: g[0].parameterize, class: "custom-control-input" }, g[0], nil %>
+                              <label for="<%= g[0].parameterize %>" class="custom-control-label"><%= g[1] %></label>
+                            </div>
+                          </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 mb-4 order-2 order-sm-1">
+                <button type="submit" class="btn btn-primary"> <i class="fas fa-search mr-1"></i>Search                </button>
+              </div>
+              <div class="col-sm-6 mb-4 text-sm-right order-1 order-sm-2">
+                <button type="button" data-toggle="collapse" data-target="#moreFilters" aria-expanded="false" aria-controls="moreFilters" data-expanded-text="Less filters" data-collapsed-text="More filters" class="btn btn-link btn-collapse pl-0 text-secondary">More filters</button>
+              </div>
+            </div>
+        <% end %>
+        <!--<div class="row">-->
+        <!--<div class="col-md-offset-4 col-md-4">-->
+        <!--<button id="filter" class="btn btn-default" data-toggle="collapse" data-target="#collapsePanel">-->
+        <!--More Filters <i class="fa fa-chevron-down"></i>-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <div class="">
+          <!--<br/>-->
+          <!--<div class= "collapse" id="collapsePanel">-->
+
+          <!--<%= simple_form_for @search, :as => :search, url: search_venues_path, method: :get, remote: true do |f| %>-->
+
+              <!--<label>Location</label>-->
+              <!--<div class="row form-group">-->
+              <!--<div class="col-md-6">-->
+              <!--<%= f.text_field :location, placeholder: "Where do you want to book a gig at?", class: "form-control", id: "searchvenuelocation" %>-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--<hr/>-->
+
+              <!--<div class="row form-group">-->
+              <!--<div class="col-md-6">-->
+              <!--<label>Min Payout</label>-->
+              <!--<%= f.text_field :min_payout, placeholder: "50", class: "form-control"  %>-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--<hr/>-->
+
+              <!--<div class="row form-group">-->
+              <!--<div class="col-md-6">-->
+              <!--<label>Date to perform on</label><br/>-->
+              <!--<%= f.text_field :date, readonly: true, placeholder: "Date", class: "text-center datepicker", id: "date" %>-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--<hr/>-->
+
+              <!--<div class="row">-->
+              <!--<div class="col-md-6">-->
+              <!--<div class="form-group select">-->
+              <!--<label>Capacity</label>-->
+              <!--<%= f.select :capacity, [["50", 50], ["100", 100], ["150", 150], ["200", 200], ["500+", 500]], id: "capacity", prompt: "Select...", class: "form-control" %>-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--<hr/>-->
+
+              <!--<label>Gig Type</label>-->
+              <!--<br/>-->
+              <!--<div class="row form-group">-->
+
+              <!--<% ["Live", "Competition", "Licensing"].each do |gt| %>-->
+                  <!--<div class="col-md-4">-->
+                  <!--<%= f.check_box :gig_type, { :multiple => true, id: gt.parameterize  }, gt, nil %>-->
+                  <!--<label for="<%= gt.parameterize %>"><%= gt %></label>-->
+                  <!--</div>-->
+                  <!--<% end %>-->
+
+              <!--&lt;!&ndash;-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[gig_type_eq_any][]", "Live" %> Live
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[gig_type_eq_any][]", "Competition" %> Competition
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[gig_type_eq_any][]", "Licensing" %> Licensing
+              <!--</div>-->
+              <!--&ndash;&gt;-->
+              <!--</div>-->
+              <!--<hr/>-->
+
+              <!--<label>Hosted Genres</label>-->
+              <!--<div class="row form-group">-->
+              <% [["is_alternative", "Alternative"], ["is_americana", "Americana"], ["is_blues", "Blues"],
+                  #             ["is_christian", "Christian"], ["is_classical", "Classical"], ["is_comedy", "Comedy"],
+                  #             ["is_country", "Country"], ["is_edm", "EDM"], ["is_electronic", "Electronic"],
+                  #             ["is_folk", "Folk"], ["is_hiphop", "Hip Hop"], ["is_jazz", "Jazz"], ["is_latin", "Latin"],
+                  #             ["is_metal", "Metal"], ["is_pop", "Pop"], ["is_rb", "R + B"], ["is_rock", "Rock"],
+                  ["is_spokenword", "Spoken Word"], ["is_world", "World"]].each do |g| %>
+                  <!--<div class="col-md-4">-->
+                  <!--<%= f.check_box :genres, { :multiple => true, id: g[0].parameterize  }, g[0], nil %>-->
+                  <!--<label for="<%= g[0].parameterize %>"><%= g[1] %></label>-->
+                  <!--</div>-->
+                  <!--<% end %>-->
+              <!--&lt;!&ndash;-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_alternative_eq]", true %> Alternative
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_americana_eq]", true %> Americana
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_blues_eq]", true %> Blues
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_christian_eq]", true %> Christian
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_classical_eq]", true %> Classical
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_comedy_eq]", true %> Comedy
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_country_eq]", true %> Country
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_edm_eq]", true %> EDM
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_electronic_eq]", true %> Electronic
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_folk_eq]", true %> Folk
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_hiphop_eq]", true %> Hip Hop
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_jazz_eq]", true %> Jazz
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_latin_eq]", true %> Latin
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_metal_eq]", true %> Metal
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_pop_eq]", true %> Pop
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_rb_eq]", true %> R+B
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_rock_eq]", true %> Rock
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_spokenword_eq]", true %> Spoken Word
+              <!--</div>-->
+              <!--<div class="col-md-4">-->
+              <%#= check_box_tag "q[is_world_eq]", true %> World
+              <!--</div>-->
+              <!--&ndash;&gt;-->
+              <!--</div>-->
+              <!--<hr/>-->
+
+              <!--<div class="row text-center">-->
+              <!--<%= f.submit "Search", class: "btn btn-primary" %>-->
+              <!--</div>-->
+              <!--<br/>-->
+
+              <!--<% end if false%>-->
+
+          <!--</div>-->
+          <!--<br/>-->
+
+          <div class="row" id="venue_listing">
+            <%= render partial: "venues/venues_list", locals: {venues: @arrVenues} %>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-4 map-side-lg pr-lg-0">
+        <div id="venueSideMap" class="map-full shadow-left"></div>
+      </div>
+    </div>
+  <!--</div>-->
+
+
+  <!--<div id="right">-->
+    <!--&lt;!&ndash; GOOGLE MAP &ndash;&gt;-->
+
+    <!--<div id="map" style="width: 100%; height: 100%"></div>-->
+
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initMap"-->
+      <!--type="text/javascript"></script>-->
+
+    <script>
+//        function initialize(venues) {
+//          var location = {lat: 44.5403, lng: -78.34}
+//
+//          if (venues.length > 0) {
+//            location = {lat: venues[0].latitude, lng: venues[0].longitude }
+//          }
+//
+//          var map = new google.maps.Map(document.getElementById('map'), {
+//            center: location,
+//            zoom: 12
+//          });
+//
+//          var marker, inforwindow;
+//
+//          venues.forEach(function(venue) {
+//            marker = new google.maps.Marker({
+//              position: {lat: venue.latitude, lng: venue.longitude },
+//              map: map
+//            });
+//
+//            inforwindow = new google.maps.InfoWindow({
+//              content: "<div class='map_payout'>$" + venue.payout + "</div>"
+//            });
+//
+//            inforwindow.open(map, marker);
+//          })
+//        }
+//
+//        google.maps.event.addDomListener(window, 'load', function() {
+//          initialize(<%#= raw @arrVenues.to_json %>)
+//        });
+    </script>
+
+  <!--</div>-->
+<!--</div>-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+<script>
+    createListingsMap({
+        mapId: 'venueSideMap',
+        jsonData: <%= raw @arrVenues.to_json %>,
+        mapPopupType: 'rental',
+        useTextIcon: true
+    });
+</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.19.0/jquery.daterangepicker.min.js"> </script>
+
+<script>
+    $(function() {
+      $("#searchvenuelocation").geocomplete();
+    })
+
+var snapSlider = document.getElementById('slider-snap');
+
+noUiSlider.create(snapSlider, {
+    start: [ $("#slider-snap-value-from").val(), $("#slider-snap-value-to").val() ],
+    snap: false,
+    connect: true,
+    step: 1,
+    range: {
+        'min': 10,
+        'max': 1000
+    }
+});
+var snapValues = [
+    document.getElementById('slider-snap-value-from'),
+    document.getElementById('slider-snap-value-to')
+];
+var inputValues = [
+    document.getElementById('slider-snap-input-from'),
+    document.getElementById('slider-snap-input-to')
+];
+snapSlider.noUiSlider.on('update', function( values, handle ) {
+    snapValues[handle].innerHTML = values[handle];
+    inputValues[handle].value = values[handle];
+});
+
+
+
+
+
+
+$(function () {
+      var dateRangeConfig = {
+          autoClose: true,
+          singleDate : true,
+          showShortcuts: false,
+          singleMonth: true,
+          startDate: new Date(),
+//          selectForward: true,
+          applyBtnClass: 'btn btn-primary',
+          container: '.datepicker-container',
+          inline: true,
+          showDateFilter: function (time, date) {
+              return '<div style="padding:5px;">\
+                            <span style="">' + date + '</span>\
+                        </div>';
+          },
+          customOpenAnimation: function (cb) {
+              $(this).fadeIn(300, cb);
+          },
+          customCloseAnimation: function (cb) {
+              $(this).fadeOut(300, cb);
+          }
+      }
+      $('#date').dateRangePicker(dateRangeConfig);
+  });
+
+
+
+</script>

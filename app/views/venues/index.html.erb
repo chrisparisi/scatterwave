@@ -1,0 +1,50 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><%= link_to "Your Venues", venues_path, class: "sidebar-link active" %></li>
+          <li class="sidebar-item"><%= link_to "Your Venue's Shows", your_bookings_path, class: "sidebar-link" %></li>
+        </ul>
+      </div>
+      <div class="col-md-9">
+        <div class="card mb-2">
+          <h2 class="h6 mb-2 card-header pt-4 pb-3 px-0 mx-4">
+            Venues
+          </h2>
+          <% if @venues.present? %>
+              <% @venues.each do |venue| %>
+
+                  <div class="card-body p-3">
+                    <!-- Details -->
+                    <div class="d-sm-flex align-items-center">
+                      <div class="u-lg-avatar mb-3 mb-sm-0 mr-3">
+                        <%= image_tag venue.cover_photo(:thumb), :size => '100x68' %>
+                      </div>
+                      <div class="mr-3">
+                        <!-- Title -->
+                        <div class="mb-3">
+                          <h3 class="h5 mb-1"><%= venue.listing_name %></h3>
+                        </div>
+                      </div>
+                      <div class="ml-auto">
+                        <%= link_to "Update", listing_venue_path(venue), class: "btn btn-primary" %>
+                      </div>
+
+                    </div><hr/>
+                    <!-- End Details -->
+                  </div>
+              <% end %>
+          <% else %>
+
+              <div class="card-body m-4">
+                <h3>You don't have any venue yet!</h3></br>
+                <%= link_to "Create venue and host some shows!", new_venue_path, class: "btn btn-primary" %>
+              </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

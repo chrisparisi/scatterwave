@@ -1,0 +1,55 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><%= link_to "Edit Profile", edit_user_registration_path, class: "sidebar-link" %></li>
+          <li class="sidebar-item"><%= link_to "Payment Method", payment_method_path, class: "sidebar-link" %></li>
+          <!--<li class="sidebar-item"><%= link_to "Payout Method", payout_method_path, class: "sidebar-link" %></li>-->
+          <li class="sidebar-item"><%= link_to "Security", change_password_path, class: "sidebar-link" %></li>
+          <li class="sidebar-item"><%= link_to "Notification Settings", notification_settings_path, class: "sidebar-link active" %></li>
+        </ul>
+      </div>
+
+      <div class="mt-4 col-md-9">
+        <div class="card">
+          <div class="card-body pb-4 px-4 pt-2">
+            <div class="row justify-content-between align-items-center mb-4">
+              <div class="col-md-5 order-md-2 text-md-right mb-3 mb-md-0"></div>
+              <div class="col-md-7 order-md-1">
+                <ul id="pills-tab" role="tablist" class="nav nav-classic nav-borderless px-0">
+                  <li class="nav-item">
+                    <a id="pills-security-one-tab" data-toggle="pill" href="#pills-security-one" role="tab" aria-controls="pills-security-one" aria-selected="true" class="nav-link active noti">Notification
+                      Settings</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <%= form_for :setting do |f| %>
+                <div class="row form-group">
+                  <div class="col-md-3 text-center">
+                    <%= f.check_box :enable_email %> Email
+                  </div>
+                  <div class="col-md-3 text-center">
+                    <%= f.check_box :enable_sms %> SMS
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <%= f.submit "Update Notifications", class: "btn btn-primary btn-wide" %>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .active.nav-link.noti {
+    color: #002776;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 3px solid #002776;
+  }
+</style>

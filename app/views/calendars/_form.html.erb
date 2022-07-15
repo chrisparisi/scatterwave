@@ -1,0 +1,89 @@
+<% @calendar.calendar_times.build unless @calendar.calendar_times.present? %>
+<%= form_for [@venue, @calendar] do |f| %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.text_field :start_date, readonly: true, value: @calendar.day || Date.today, class: "form-control datepicker" %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.text_field :end_date, readonly: true, value: @calendar.day || Date.today, class: "form-control datepicker" %>
+          </div>
+        </div>
+
+      </div>
+
+      <!--<div class="form-group">-->
+        <!--<div class="btn-group" data-toggle="buttons-radio">-->
+
+        <!--</div>-->
+      <!--</div>-->
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="custom-control custom-radio">
+              <%= f.radio_button :status,"Available", :checked => @calendar.status == "Available", id: "calendar_status_available", class: "custom-control-input", required: true %>
+              <%= label :status_yes, 'Available', class: "custom-control-label u-font-size-90", for: "calendar_status_available" %>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="custom-control custom-radio">
+              <%= f.radio_button :status, "Not_Available", :checked => @calendar.status == "Not_Available", id: "calendar_status_not_available", class: "custom-control-input", required: true %>
+              <%= label :status_no, 'Not available', class: "custom-control-label u-font-size-90", for: "calendar_status_not_available" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row new-payout">
+        <div class="col-md-10">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :payout, class: "form-control", value: @calendar.payout ||= @venue.payout, required: true %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <p style="margin-top: 10px">Per show</p>
+        </div>
+      </div>
+
+      <div class="multi-fields add-time-slots">
+        <h3>Times</h3>
+        <%= f.fields_for :calendar_times do |edu| %>
+            <%= render 'calendar_time_fields', f: edu %>
+        <% end %>
+        <div class="row ml-1 mb-2">
+          <%= link_to_add_association '<i class="fa fa-plus-circle"></i> Add time'.html_safe, f, :calendar_times, class: 'bttn text-info pull-left', partial: 'calendar_time_fields' %>
+        </div>
+      </div>
+
+
+      <div class="no-payout hide">
+      </div>
+
+      <div class="form-group">
+        <%= f.button "Save", type: :submit, class: "btn btn-success" %>
+      </div>
+    </div>
+<% end %>
+
+<script>
+    $(function () {
+        var notAvailable = $('#calendar_status_not_available'),
+            available = $('#calendar_status_available');
+
+        notAvailable.click(function () {
+            $('.no-payout').show();
+            $('.new-payout').hide();
+        });
+
+        available.click(function () {
+            $('.no-payout').hide();
+            $('.new-payout').show();
+        });
+
+    })
+</script>

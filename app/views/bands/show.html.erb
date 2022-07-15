@@ -1,0 +1,426 @@
+<section style="background-image:url('<%= @band.cover_picture(nil) %>'); " class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover">
+  <div class="container overlay-content">
+    <div class="d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
+      <div class="text-white mb-4 mb-lg-0">
+        <div class="badge badge-pill badge-transparent px-3 py-2 mb-4"><%= @band.band_genre %>
+          & <%= @band.band_sec_genre %></div>
+        <h1 class="text-shadow verified"><%= @band.band_name %></h1>
+        <% if @host_reviews.present? %>
+            <p class="mb-0 d-flex align-items-center"><span id="average_rating1" class="d-star-rating" data-rating="<%= @band.average_rating %>"></span>
+            </p></n> <%= @host_reviews.count %>
+            Reviews
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="py-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- About Listing-->
+        <div class="text-block">
+          <h3 class="mb-3">About</h3>
+          <% if @band.summary.present? %>
+              <p class="text-muted"><%= @band.summary %></p>
+          <% else %>
+              There is nothing about this band.
+          <% end %>
+          <ul class="list-inline text-sm mb-4">
+            <li class="list-inline-item mr-3"><i class="fa fa-users mr-1 text-secondary"></i> <%= @band.band_type %></li>
+            <li class="list-inline-item mr-3"><i class="fa fa-music mr-1 text-secondary"></i> <%= @band.band_genre if @band.band_genre.present? %></li>
+            <li class="list-inline-item mr-3"><i class="fa fa-music mr-1 text-secondary"></i> <%= @band.band_sec_genre if @band.band_sec_genre.present? %></li>
+          </ul>
+        </div>
+        <div class="text-block">
+          <div class="media">
+            <%= image_tag avatar_url(@band.user), class: "avatar avatar-lg mr-4" %>
+            <div class="media-body">
+              <p class="m-0">
+                <span class="text-muted text-uppercase text-sm">Hosted by </span><br><strong>   <%= link_to user_path(@band.user) do %>
+                    <%= @band.user.fullname %>
+                <% end %></strong></p>
+              <p class="text-sm"><a href="<%= user_path(@band.user) %>">See  <%= @band.user.fullname %>'s other listings
+                <i class="fas fa-long-arrow-alt-right ml-2"></i></a></p>
+            </div>
+          </div>
+        </div>
+        <div class="text-block">
+          <!-- Listing Location-->
+          <h3 class="mb-4">Location</h3>
+          <div class="mb-4">
+            <div id="map" style="width: 100%; height: 400px"></div>
+
+<!--            <script src="https://maps.googleapis.com/maps/api/js"></script>-->
+            <script>
+                function initialize() {
+                    var location = {lat: <%= @band.latitude %>, lng: <%= @band.longitude %>};
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: location,
+                        zoom: 14
+                    });
+
+                    var marker = new google.maps.Marker({
+                        position: location,
+                        map: map
+                    });
+
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: '<div id="content"><%= image_tag @band.cover_picture(:medium) %></div>'
+                    });
+
+                    infoWindow.open(map, marker);
+                }
+
+                google.maps.event.addDomListener(window, 'load', initialize);
+            </script>
+
+          </div>
+          <!--<div class="map-wrapper-300 mb-3">-->
+          <!--<div id="detailMap" class="h-100"></div>-->
+          <!--</div>-->
+        </div>
+        <% if @pictures.present? %>
+            <div class="text-block">
+              <!-- Gallery-->
+              <h3 class="mb-4">Gallery</h3>
+              <div class="row gallery ml-n1 mr-n1">
+                <% if @pictures.length > 0 %>
+                    <% @pictures.each do |photo| %>
+                        <div class="col-lg-4 col-6 px-1 mb-2">
+                          <a href="<%= photo.image.url() %>" data-fancybox="gallery" title="Our street"><img src="<%= photo.image.url() %>" alt="..." class="img-fluid"></a>
+                        </div>
+                    <% end %>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+        <!-- Amenities-->
+        <div class="text-block">
+          <h3 class="mb-4">Music</h3>
+          <%= render 'shared/player' %>
+          <% if @musics.count > 0 %>
+              <!--<div class="row">-->
+              <% @musics.each do |music| %>
+                  <div class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading preview">
+                        <div class="row">
+                          <div class="col-md-1 mb-2">
+                            <%= image_tag 'play-button.png', style: ' border-radius: 25px;max-height: 25px; object-fit:contain;', data: {mid: music.id, name: music.music_file_name, url: music.music.url}, class: 'smart-play' %>
+                          </div>
+                          <div class="col-md-11 text-muted">
+                            <%= music.music_file_name %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              <% end %>
+              <!--</div>-->
+          <% end %>
+        </div>
+        <div class="text-block">
+          <p class="subtitle text-sm text-primary">Reviews </p>
+          <h3>
+            <%= pluralize(@host_reviews.count, "Review") %>
+            <span class="d-star-rating" data-rating=<%= @band.average_rating %> ></span>
+          </h3>
+          <div><%= render "reviews/host_list" %></div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="pl-xl-4">
+          <!-- Opening Hours      -->
+          <% if @future_shows.present? %>
+
+              <div class="card border-0 shadow mb-5">
+                <div class="card-header bg-gray-100 py-4 border-0">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <p class="subtitle text-sm text-primary">Future Shows</p>
+
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <h3></h3>
+                  <% @future_shows.each do |show| %>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><%= show.date.strftime('%v') %></p>
+                          <small><%= show.start_time.strftime('%H:%M %P') %>
+                            - <%= show.end_time.strftime('%H:%M %P') %></small>
+                        </div>
+                        <div class="col-md-6">
+                      <span>
+                        <%= image_tag show.venue.cover_photo(nil), class: "img-circle avatar-small" %>
+                        <%= link_to venue_path(show.venue) do %>
+                          <%= show.venue.listing_name %>
+                        <% end %>
+                      </span>
+                        </div>
+                      </div>
+                      <hr/>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+          <!-- Contact-->
+          <div class="card border-0 shadow mb-5">
+            <div class="card-header bg-gray-100 py-4 border-0">
+              <div class="media align-items-center">
+                <div class="media-body">
+                  <p class="subtitle text-sm text-primary">Drop Us a Line</p>
+                  <h4 class="mb-0">Contact</h4>
+                </div>
+                <svg class="svg-icon svg-icon svg-icon-light w-3rem h-3rem ml-3 text-muted">
+                  <use xlink:href="#fountain-pen-1"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled mb-4">
+                <li class="mb-2">
+                  <a href="<%= @band.face_link %>" class="text-blue text-sm text-decoration-none" target="_blank"><i class="fab fa-facebook mr-3"></i><span class="text-muted"><%= @band.face_link %></span></a>
+                </li>
+                <li class="mb-2">
+                  <a href="<%= @band.sound_link %>" class=" text-sm text-decoration-none" target="_blank"><i class="fab fa-soundcloud mr-3"></i><span class="text-muted"><%= @band.sound_link %></span></a>
+                </li>
+                <li class="mb-2">
+                  <a href="<%= @band.spot_link %>" class=" text-sm text-decoration-none" target="_blank"><i class="fab fa-spotify mr-3"></i><span class="text-muted"><%= @band.spot_link %></span></a>
+                </li>
+                <!--<li class="mb-2"> <a href="#" class=" text-sm text-decoration-none"><i class="fab fa-google-plus mr-3"></i><span class="text-muted">Google+</span></a></li>-->
+              </ul>
+              <% if current_user.present? %>
+                  <div class="text-center">
+                    <%= link_to conversations_path(sender_id: current_user.id, recipient_id: @band.user.id), method: :post, class: "btn btn-outline-primary btn-block" do %>
+                        <i class="far fa-paper-plane mr-2"></i>Send a Message
+                    <% end %>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--<div class="py-6 bg-gray-100">-->
+<!--<div class="container">-->
+<!--<h5 class="mb-0">Similar places</h5>-->
+<!--<p class="subtitle text-sm text-primary mb-4">You may also like </p>-->
+<!--&lt;!&ndash; Slider main container&ndash;&gt;-->
+<!--<div class="swiper-container swiper-container-mx-negative items-slider">-->
+<!--&lt;!&ndash; Additional required wrapper&ndash;&gt;-->
+<!--<div class="swiper-wrapper pb-5">-->
+<!--&lt;!&ndash; Slides&ndash;&gt;-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; venue item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e33b1527bfe2abaf92" class="w-100 h-100">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div style="background-image: url(img/photo/restaurant-1430931071372-38127bd472b8.jpg); min-height: 200px;" class="card-img-top overflow-hidden dark-overlay bg-cover">-->
+<!--&lt;!&ndash;img.img-fluid(src="#{imgBasePath}#{val.image}" alt="#{val.name}")&ndash;&gt;<a href="detail.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<h4 class="text-white text-shadow">Blue Hill</h4>-->
+<!--<p class="mb-2 text-xs"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300"> </i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top d-flex justify-content-between align-items-center">-->
+<!--<div class="badge badge-transparent badge-pill px-3 py-2">Restaurants</div>-->
+<!--<a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"></use>-->
+<!--</svg>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-body">-->
+<!--<p class="text-sm text-muted mb-3"> Cupidatat excepteur non dolore laborum et quis nostrud veniam dolore-->
+<!--deserunt. Pariatur dolore ut in elit id nulla. Irur...</p>-->
+<!--<p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>-->
+<!--<p class="text-sm mb-0">-->
+<!--<a href="#" class="mr-1">Restaurant,</a><a href="#" class="mr-1">Contemporary</a>-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; venue item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e322f3375db4d89128" class="w-100 h-100">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div style="background-image: url(img/photo/restaurant-1436018626274-89acd1d6ec9d.jpg); min-height: 200px;" class="card-img-top overflow-hidden dark-overlay bg-cover">-->
+<!--&lt;!&ndash;img.img-fluid(src="#{imgBasePath}#{val.image}" alt="#{val.name}")&ndash;&gt;<a href="detail.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<h4 class="text-white text-shadow">Plutorque</h4>-->
+<!--<p class="mb-2 text-xs"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top d-flex justify-content-between align-items-center">-->
+<!--<div class="badge badge-transparent badge-pill px-3 py-2">Restaurant</div>-->
+<!--<a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"></use>-->
+<!--</svg>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-body">-->
+<!--<p class="text-sm text-muted mb-3"> Proident irure eiusmod velit veniam consectetur id minim irure et-->
+<!--nostrud mollit magna velit. Commodo amet proident aliq...</p>-->
+<!--<p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>-->
+<!--<p class="text-sm mb-0"><a href="#" class="mr-1">Restaurant,</a><a href="#" class="mr-1">Fusion</a>-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="swiper-slide h-auto px-2">-->
+<!--&lt;!&ndash; venue item&ndash;&gt;-->
+<!--<div data-marker-id="59c0c8e3a31e62979bf147c9" class="w-100 h-100">-->
+<!--<div class="card h-100 border-0 shadow">-->
+<!--<div style="background-image: url(img/photo/restaurant-1466978913421-dad2ebd01d17.jpg); min-height: 200px;" class="card-img-top overflow-hidden dark-overlay bg-cover">-->
+<!--&lt;!&ndash;img.img-fluid(src="#{imgBasePath}#{val.image}" alt="#{val.name}")&ndash;&gt;<a href="detail.html" class="tile-link"></a>-->
+<!--<div class="card-img-overlay-bottom z-index-20">-->
+<!--<h4 class="text-white text-shadow">Junipoor</h4>-->
+<!--<p class="mb-2 text-xs"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="card-img-overlay-top d-flex justify-content-between align-items-center">-->
+<!--<div class="badge badge-transparent badge-pill px-3 py-2">Music club</div>-->
+<!--<a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+<!--<svg class="svg-icon text-white">-->
+<!--<use xlink:href="#heart-1"></use>-->
+<!--</svg>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="card-body">-->
+<!--<p class="text-sm text-muted mb-3"> Lorem amet ex duis in et fugiat consectetur laborum eiusmod labore.-->
+<!--Quis cupidatat et do dolor in in magna. Eu sit quis ...</p>-->
+<!--<p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>-->
+<!--<p class="text-sm mb-0">-->
+<!--<a href="#" class="mr-1">Music,</a><a href="#" class="mr-1">Techno,</a><a href="#" class="mr-1">House</a>-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash;<div class="swiper-slide h-auto px-2">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash; venue item&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div data-marker-id="59c0c8e3503eb77d487e8082" class="w-100 h-100">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card h-100 border-0 shadow">&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="background-image: url(img/photo/restaurant-1477763858572-cda7deaa9bc5.jpg); min-height: 200px;" class="card-img-top overflow-hidden dark-overlay bg-cover">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;img.img-fluid(src="#{imgBasePath}#{val.image}" alt="#{val.name}")&ndash;&gt;<a href="detail.html" class="tile-link"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-img-overlay-bottom z-index-20">&ndash;&gt;-->
+<!--&lt;!&ndash;<h4 class="text-white text-shadow">Musix</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="mb-2 text-xs"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300"> </i><i class="fa fa-star text-gray-300"> </i>&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-img-overlay-top d-flex justify-content-between align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="badge badge-transparent badge-pill px-3 py-2">Music club</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="javascript: void();" class="card-fav-icon position-relative z-index-40">&ndash;&gt;-->
+<!--&lt;!&ndash;<svg class="svg-icon text-white">&ndash;&gt;-->
+<!--&lt;!&ndash;<use xlink:href="#heart-1"></use>&ndash;&gt;-->
+<!--&lt;!&ndash;</svg>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm text-muted mb-3"> Deserunt eiusmod Lorem proident consequat elit culpa laboris ea&ndash;&gt;-->
+<!--&lt;!&ndash;cupidatat. Consequat dolore proident ipsum qui sint enim...</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" class="mr-1">Music,</a><a href="#" class="mr-1">Club,</a><a href="#" class="mr-1">Rock</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="swiper-slide h-auto px-2">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash; venue item&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div data-marker-id="59c0c8e39aa2eed0626e485d" class="w-100 h-100">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card h-100 border-0 shadow">&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="background-image: url(img/photo/restaurant-1504087697492-238a6bf49ce8.jpg); min-height: 200px;" class="card-img-top overflow-hidden dark-overlay bg-cover">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;img.img-fluid(src="#{imgBasePath}#{val.image}" alt="#{val.name}")&ndash;&gt;<a href="detail.html" class="tile-link"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-img-overlay-bottom z-index-20">&ndash;&gt;-->
+<!--&lt;!&ndash;<h4 class="text-white text-shadow">Prosure</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="mb-2 text-xs"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-img-overlay-top d-flex justify-content-between align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="badge badge-transparent badge-pill px-3 py-2">Restaurant</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="javascript: void();" class="card-fav-icon position-relative z-index-40">&ndash;&gt;-->
+<!--&lt;!&ndash;<svg class="svg-icon text-white">&ndash;&gt;-->
+<!--&lt;!&ndash;<use xlink:href="#heart-1"></use>&ndash;&gt;-->
+<!--&lt;!&ndash;</svg>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm text-muted mb-3"> Cillum sunt reprehenderit ea non irure veniam dolore commodo labore&ndash;&gt;-->
+<!--&lt;!&ndash;fugiat est consequat velit. Cupidatat nisi qui ad si...</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" class="mr-1">Nisi,</a><a href="#" class="mr-1">Ex,</a><a href="#" class="mr-1">Eiusmod</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="swiper-slide h-auto px-2">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash; venue item&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div data-marker-id="59c0c8e39aa2edasd626e485d" class="w-100 h-100">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card h-100 border-0 shadow">&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="background-image: url(img/photo/restaurant-1505275350441-83dcda8eeef5.jpg); min-height: 200px;" class="card-img-top overflow-hidden dark-overlay bg-cover">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;img.img-fluid(src="#{imgBasePath}#{val.image}" alt="#{val.name}")&ndash;&gt;<a href="detail.html" class="tile-link"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-img-overlay-bottom z-index-20">&ndash;&gt;-->
+<!--&lt;!&ndash;<h4 class="text-white text-shadow">Take That</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="mb-2 text-xs"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-gray-300"> </i>&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-img-overlay-top d-flex justify-content-between align-items-center">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="badge badge-transparent badge-pill px-3 py-2">Café</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="javascript: void();" class="card-fav-icon position-relative z-index-40">&ndash;&gt;-->
+<!--&lt;!&ndash;<svg class="svg-icon text-white">&ndash;&gt;-->
+<!--&lt;!&ndash;<use xlink:href="#heart-1"></use>&ndash;&gt;-->
+<!--&lt;!&ndash;</svg>&ndash;&gt;-->
+<!--&lt;!&ndash;</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm text-muted mb-3"> Cillum sunt reprehenderit ea non irure veniam dolore commodo labore&ndash;&gt;-->
+<!--&lt;!&ndash;fugiat est consequat velit. Cupidatat nisi qui ad si...</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm text-muted text-uppercase mb-1">By <a href="#" class="text-dark">Matt Damon</a></p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="text-sm mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" class="mr-1">Nisi,</a><a href="#" class="mr-1">Ex,</a><a href="#" class="mr-1">Eiusmod</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+
+<!--&lt;!&ndash; If we need pagination&ndash;&gt;-->
+<!--<div class="swiper-pagination"></div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<script>
+    $('#average_rating').raty({
+        path: '/',
+        readOnly: true,
+        score: <%= @band.average_rating %>
+    });
+</script>
+
+<style>
+  .panel-default .panel-heading {
+    color: black;
+    background-color: white;
+  }
+</style>

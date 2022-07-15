@@ -1,0 +1,10 @@
+$('#musics').attr('data-music-upload', "<%= @band_musics.count %>").html("<%= j render 'music_list' %>")
+<% if @band.band_musics.blank? %>
+  $('#music_check').hide();
+<% end %>
+
+<% if !@band.active && !@band.summary.blank? && !@band.pictures.blank? && !@band.address.blank? && !@band.band_musics.blank? %>
+    $('#publish_button').attr('disabled', false);
+<% else %>
+    $('#publish_button').attr('disabled', true);
+<% end %>

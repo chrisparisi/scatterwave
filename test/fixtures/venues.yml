@@ -1,0 +1,63 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  venue_type: MyString
+  gig_type: MyString
+  capacity: 1
+  listing_name: MyString
+  summary: MyText
+  comments: MyText
+  address: MyString
+  is_alternative: false
+  is_americana: false
+  is_blues: false
+  is_christian: false
+  is_classical: false
+  is_comedy: false
+  is_country: false
+  is_edm: false
+  is_electronic: false
+  is_folk: false
+  is_hiphop: false
+  is_jazz: false
+  is_latin: false
+  is_metal: false
+  is_pop: false
+  is_rb: false
+  is_rock: false
+  is_spokenword: false
+  is_world: false
+  payout: 1
+  active: false
+  user: one
+
+two:
+  venue_type: MyString
+  gig_type: MyString
+  capacity: 1
+  listing_name: MyString
+  summary: MyText
+  comments: MyText
+  address: MyString
+  is_alternative: false
+  is_americana: false
+  is_blues: false
+  is_christian: false
+  is_classical: false
+  is_comedy: false
+  is_country: false
+  is_edm: false
+  is_electronic: false
+  is_folk: false
+  is_hiphop: false
+  is_jazz: false
+  is_latin: false
+  is_metal: false
+  is_pop: false
+  is_rb: false
+  is_rock: false
+  is_spokenword: false
+  is_world: false
+  payout: 1
+  active: false
+  user: two

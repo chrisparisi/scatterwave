@@ -1,0 +1,70 @@
+<div class="row">
+
+  <div class="col-lg-4 align-self-center mb-4 mb-lg-0">
+    <div class="d-flex align-items-center mb-3">
+      <h2 class="h5 mb-0">
+        <%= link_to user_path(tour.venue.user) do %>
+            <%= tour.venue.user.fullname %>
+        <% end %>
+      </h2>
+      <%= image_tag avatar_url(tour.venue.user), class: "avatar avatar-sm avatar-border-white ml-3" %>
+    </div>
+    <p class="text-sm text-muted">
+      <%= link_to venue_path(tour.venue) do %>
+          <%= image_tag tour.venue.cover_photo(:thumb), :size => '100x68' %>
+      <% end %>
+    </p>
+  </div>
+  <div class="col-lg-8">
+    <div class="row">
+      <div class="col-6 col-md-4 col-lg-4 py-3 mb-3 mb-lg-0">
+        <h6 class="label-heading">Venue Name</h6>
+        <p class="text-sm font-weight-bold"><%= link_to tour.venue.listing_name, venue_path(tour.venue) %></p>
+        <h6 class="label-heading">Date</h6>
+        <p class="text-sm font-weight-bold"><%= tour.date.strftime('%v') %></p>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3 py-3">
+        <h6 class="label-heading">Status</h6>
+        <% if tour.status == 'Waiting' %>
+            <p class="badge badge-pill badge-warning-light text-center"><%= tour.status %></p>
+        <% end %>
+        <% if tour.status == 'Declined' %>
+            <p class="badge badge-pill badge-danger-light text-center"><%= tour.status %></p>
+        <% end %>
+        <% if tour.status == 'Approved' %>
+            <p class="badge badge-pill badge-success-light text-center mb-2"><%= tour.status %></p>
+            <% if tour.Approved? %>
+                <p class="badge badge-pill badge-danger-light text-center">(<%= tour.is_paid ? "Paid" : "UnPaid" %>
+                  )</p>
+            <% end %>
+        <% end %>
+      </div>
+      <div class="col-12 col-lg-5 py-3">
+
+                            <span class="text-muted text-sm text-uppercase">
+                              <%= render partial: "reviews/guest_form", locals: {booking: tour} if tour.Approved? %>
+                            </span>
+        <br class="d-none d-lg-block">
+        <% if tour.status == 'Approved' %>
+            <div class="mt-2">
+                                <span class="text-primary text-sm text-uppercase mr-4 mr-lg-0">
+
+                                  <% if tour.date < Time.now && tour.Approved? && !tour.is_paid %>
+                                    <% if (tour.request_sent_at.nil? || tour.request_sent_at < (Time.now - 12.hours)) %>
+                                        <%= link_to send_pay_request_booking_path(tour) do %>
+                                            <i class="fa fa-thumbs-up">Request for pay </i>
+                                        <% end %>
+                                    <% else %>
+                                        <i class="fa fa-thumbs-up" title="You need to wait for some time for request again.">Request
+                                          for pay</i>
+                                    <% end %>
+                                  <% end %>
+                                </span>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>

@@ -1,0 +1,33 @@
+<div class="container-fluid px-3">
+  <div class="row min-vh-100">
+    <div class="col-md-8 col-lg-6 col-xl-5 d-flex align-items-center">
+      <div class="w-100 py-5 px-md-5 px-xl-6 position-relative">
+        <div class="mb-5">
+          <%= image_tag "favicon.png", style:"max-width: 4rem;",  class:"img-fluid mb-3" %>
+          <h2>Forgot your password?</h2>
+        </div>
+          <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+            <%= render 'shared/devisemes' %>
+            <div class="form-group">
+                <%= f.email_field :email, autofocus: true, placeholder: "Email", class: "form-control" %>
+              </div>
+              <div class="actions">
+                <%= f.submit "Reset Password", class: "btn btn-lg btn-block btn-primary" %>
+              </div>
+          <% end %>
+          <hr class="my-4">
+          <p class="text-center">
+            <small class="text-muted text-center">Don't have an account yet? <a href="<%= new_user_registration_path %>">Sign Up </a></small>
+          </p>
+        <a href="/" class="close-absolute mr-md-5 mr-xl-6 pt-5">
+          <i class="fa-3x fa fa-times" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4 col-lg-6 col-xl-7 d-none d-md-block">
+      <!-- Image-->
+      <div style="background-image: url( <%=asset_url('banner.jpg')%>);" class="bg-cover h-100 mr-n3"></div>
+    </div>
+  </div>
+</div>
+

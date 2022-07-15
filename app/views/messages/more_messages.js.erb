@@ -1,0 +1,2 @@
+$(".set-see-more-message").html("<%= j link_to "Show More Messages <i class='fa fa-sort'></i>".html_safe, more_messages_conversation_messages_path(@conversation, page: @messages.next_page, last: params[:last]), remote: true, class: "btn btn-secondary", title: "Show More Messages" if @messages.next_page.present? %>");
+$("#chat_<%= current_user.id %>").append("<%= j render @messages %>");

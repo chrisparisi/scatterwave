@@ -1,0 +1,41 @@
+<div class="swiper-slide h-auto px-2">
+  <!-- place item-->
+  <div data-marker-id="59c0c8e33b1527bfe2abaf92" class="w-100 h-100 hover-animate listing vanue-list">
+    <div class="card h-100 border-0 shadow">
+      <div class="card-img-top overflow-hidden gradient-overlay">
+        <%= image_tag venue.cover_photo(:medium), class: "img-fluid" %>
+        <a href="<%= venue_path(venue) %>" class="tile-link"></a>
+        <div class="card-img-overlay-bottom z-index-20">
+          <div class="media text-white text-sm align-items-center">
+            <%= image_tag avatar_url(venue.user), class: "avatar avatar-border-white mr-2" %>
+            <div class="media-body"><%= venue.user.fullname %></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body d-flex align-items-center">
+        <div class="w-100">
+          <h6 class="card-title">
+            <%= link_to venue.listing_name, venue, class: "text-decoration-none text-dark" %></br>
+            <% if action_name == 'show' %>
+                <p class="flex-grow-1 mb-0 text-muted text-sm">(<%= venue.distance.round(2) %> miles away)</p>
+            <% end %>
+          </h6>
+          <div class="d-flex card-subtitle mb-3">
+            <p class="flex-grow-1 mb-0 text-muted text-sm"><%= pluralize(venue.guest_reviews.count, "review") %></p>
+            <!--<span id="average_rating"></span>-->
+            <div id="venuestar_<%= venue.id %>"></div>
+            <!--<p class="flex-shrink-1 mb-0 card-stars text-xs text-right">-->
+              <!--<i class="fa fa-star text-warning"></i>-->
+              <!--<i class="fa fa-star text-warning"></i>-->
+              <!--<i class="fa fa-star text-warning"></i>-->
+              <!--<i class="fa fa-star text-warning"></i>-->
+              <!--<i class="fa fa-star text-warning"></i>-->
+            <!--</p>-->
+            <span class="d-star-rating" data-rating=<%= venue.average_rating %> ></span>
+          </div>
+          <p class="card-text text-muted"><span class="h4 text-primary">$<%= venue.payout %></span> per Gig</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

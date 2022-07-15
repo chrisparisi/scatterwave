@@ -1,0 +1,6 @@
+<% @times.each do |t| %>
+    <label>
+      <%= radio_button_tag "calendar_time_id", t.id, false, class: "time-radio" %>
+      <%= "#{t.start_time.strftime('%I:%M %p')} - #{t.end_time.strftime('%I:%M %p')}" %>
+    </label>
+<% end %>

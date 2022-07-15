@@ -1,0 +1,197 @@
+<div style="height: 8px;" class="progress rounded-0 sticky-top">
+  <div role="progressbar" style="width: 60%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div>
+</div>
+<section class="py-5">
+  <div class="container">
+    <p class="subtitle text-primary">Add new Venue</p>
+    <h1 class="h2 mb-5"> Description <span class="text-muted float-right">Step 3</span></h1>
+    <%= form_for @venue do |f| %>
+        <div class="row form-block">
+          <div class="col-lg-4">
+            <h4>Description</h4>
+            <p class="text-muted text-sm"> Tell us a little bit about your venue! What kind of vibes can patrons and bands expect?
+            Here you can also leave comments for the band about the stages setup or what you are  expecting from them.</p>
+          </div>
+          <div class="col-lg-7 ml-auto">
+            <div class="form-group">
+              <label for="form_name" class="form-label">Listing Name</label>
+              <%= f.text_field :listing_name, placeholder: "What is your listing name?", class: "form-control", required: true %>
+            </div>
+            <label for="form_name" class="form-label">Summary</label>
+            <%= f.text_area :summary, rows: 5, placeholder: "Summary of your venue", class: "form-control", required: true %>
+
+            <label for="form_name" class="form-label">Comments for Band</label>
+            <%= f.text_area :comments, rows: 5, placeholder: "Comments for the band", class: "form-control" %>
+          </div>
+        </div>
+        <div class="row form-block">
+          <div class="col-lg-4">
+            <h4>Address</h4>
+          </div>
+          <div class="col-lg-7 ml-auto">
+
+            <div class="form-group"></div>
+            <div class="form-group">
+              <label for="form_name" class="form-label">Address</label>
+              <%= f.text_field :address, placeholder: "What is your address?", class: "form-control", required: true, id: "venueaddress" %>
+              <div class="details">
+                <%= f.hidden_field :latitude,  :"data-geo"=> "lat" %>
+                <%= f.hidden_field :longitude, :"data-geo"=> "lng" %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <%= hidden_field_tag "is_genre", true %>
+        <div class="row form-block">
+          <div class="col-lg-4">
+            <h4>Genre</h4>
+            <p class="text-muted text-sm"> Put a check next to any of the genres of music that you would want to have hosted at your venue.</p>
+          </div>
+          <div class="col-lg-7 ml-auto">
+            <div class="form-group">
+              <label class="form-label">Available Genre</label>
+              <ul class="list-inline mb-0">
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_alternative, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_alternative, "Alternative", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_americana, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_americana, "Americana", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_blues, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_blues, "Blues", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_christian, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_christian, "Christian", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_classical, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_classical, "Classical", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_comedy, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_comedy, "Comedy", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_country, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_country, "Country", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_edm, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_edm, "EDM", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_electronic, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_electronic, "Electronic", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_folk, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_folk, "Folk", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_hiphop, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_hiphop, "Hip Hop", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_jazz, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_jazz, "Jazz", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_latin, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_latin, "Latin", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_metal, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_metal, "Metal", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_pop, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_pop, "Pop", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_rb, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_rb, "R+B", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_rock, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_rock, "Rock", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_spokenword, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_spokenword, "Spoken Word", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+                <li class="list-inline-item">
+                  <div class="custom-control custom-checkbox">
+                    <%= f.check_box :is_world, class: 'custom-control-input' %>
+                    <%= label_tag(:venue_is_world, "World", class: "custom-control-label text-muted") %>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row form-block flex-column flex-sm-row">
+          <div class="col text-center text-sm-left">
+            <%= link_to payout_venue_path, class: "btn btn-link text-muted" do %>
+                <i class="fa-chevron-left fa mr-2"></i>Back
+            <% end %>
+          </div>
+          <div class="col text-center text-sm-right">
+            <button class="btn btn-primary px-3" type="submit">Next step<i class="fa-chevron-right fa ml-2"></i>
+            </button>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</section>
+
+
+
+<script>
+    $(function () {
+        $("#venueaddress").geocomplete({
+            details: ".details",
+            detailsAttribute: "data-geo"
+        });
+    })
+</script>

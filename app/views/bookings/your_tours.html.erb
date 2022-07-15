@@ -1,0 +1,44 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><%= link_to "Your Band", bands_path, class: "sidebar-link" %></li>
+          <li class="sidebar-item"><%= link_to "Your Tours", your_tours_path, class: "sidebar-link active" %></li>
+        </ul>
+      </div>
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header pt-4 pb-3 px-0 mx-4">
+            <h2 class="h6 mb-0">
+              Your Tours
+            </h2>
+          </div>
+          <div class="card-body m-4">
+
+            <% if @tours.blank? %>
+                <h3>You haven't created a band!</h3><br/>
+                <%= link_to "Start a band and book some gigs!", new_band_path, class: "btn btn-primary" %>
+            <% else %>
+                <div id="booking-list">
+                  <%= render 'tours', tours: @tours %>
+                </div>
+                <div id="all-infinite-scrolling" style="display:none">
+                  <%= will_paginate @tours %>
+                </div>
+                <div id="loading" class="d-none">
+                  Loading...
+                </div>
+                <hr/>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .badge {
+    font-size: 100%;
+  }
+</style>

@@ -1,0 +1,35 @@
+<%= render 'shared/player' %>
+<% if @band_musics.count > 0 %>
+    <br/><br/>
+    <div class="row">
+      <% @band_musics.each do |music| %>
+          <div class="col-md-12">
+            <div class="media align-items-center mb-4">
+              <!-- Avatar -->
+              <div class="u-avatar position-relative mr-3">
+                <%= image_tag 'play-button.png', style: ' border-radius: 25px;max-height: 25px;', data: {mid: music.id, name: music.music_file_name, url: music.music.url}, class: 'smart-play' %>
+              </div>
+              <!-- End Avatar -->
+              <div class="media-body">
+                <span><%= music.music_file_name %></span>
+              </div>
+              <div class="align-self-start ml-auto">
+                <!-- Bookmark -->
+                <div class="bookmark-checkbox d-inline-block" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                  <%= link_to band_band_music_path(music.band_id, music), remote: true, method: :delete, data: {confirm: "Are you sure?"} do %>
+                      <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                  <% end %>
+                </div>
+                <!-- End Bookmark -->
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+<% end %>
+<style>
+  .panel-default .panel-heading {
+    color: black;
+    background-color: white;
+  }
+</style>

@@ -1,0 +1,4 @@
+$(window).data('ajaxready', true);
+$("#booking-list").append("<%= j render 'tours', tours: @tours %>");
+$('#all-infinite-scrolling').html("<%= j will_paginate @tours %>");
+$("#loading").addClass('d-none');

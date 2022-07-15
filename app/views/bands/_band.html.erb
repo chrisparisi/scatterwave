@@ -1,0 +1,32 @@
+<div class="swiper-slide h-auto px-2">
+  <!-- place item-->
+  <div data-marker-id="59c0c8e33b1527bfe2abaf92" class="w-100 h-100 hover-animate listing band-list">
+    <div class="card h-100 border-0 shadow">
+      <div class="card-img-top overflow-hidden gradient-overlay">
+        <%= image_tag band.cover_picture(:medium), class: "img-fluid" %>
+        <a href="<%= band_path(band) %>" class="tile-link"></a>
+        <div class="card-img-overlay-bottom z-index-20">
+          <div class="media text-white text-sm align-items-center">
+            <%= image_tag avatar_url(band.user), class: "avatar avatar-border-white mr-2" %>
+            <div class="media-body"><%= band.user.fullname %></div>
+          </div>
+        </div>
+        <!--<div class="card-img-overlay-top text-right"><a href="javascript: void();" class="card-fav-icon position-relative z-index-40">-->
+          <!--<svg class="svg-icon text-white">-->
+            <!--<use xlink:href="#heart-1"> </use>-->
+          <!--</svg></a></div>-->
+      </div>
+      <div class="card-body d-flex align-items-center">
+        <div class="w-100">
+          <h6 class="card-title">
+            <%= link_to band.band_name, band, class: "text-decoration-none text-dark" %>
+          </h6>
+          <div class="d-flex card-subtitle mb-3">
+            <p class="flex-grow-1 mb-0 text-muted text-sm"><%= pluralize(band.average_rating, "review") %></p>
+            <span class="d-star-rating" data-rating=<%= band.average_rating %> ></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

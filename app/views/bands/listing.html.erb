@@ -1,0 +1,87 @@
+<div style="height: 8px;" class="progress rounded-0 sticky-top">
+  <div role="progressbar" style="width: 16.66%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div>
+</div>
+<section class="py-5">
+  <div class="container">
+    <p class="subtitle text-primary">Add new Band</p>
+    <h1 class="h2 mb-5"> Basic information <span class="text-muted float-right">Step 1</span></h1>
+
+    <%= form_for @band do |f| %>
+        <div class="row form-block">
+          <div class="col-lg-4">
+            <h4>Band Info</h4>
+          </div>
+          <div class="col-lg-7 ml-auto">
+
+            <div class="form-group"></div>
+            <div class="form-group">
+              <label for="form_name" class="form-label">Band Name</label>
+              <%= f.text_field :band_name, placeholder: "What is your band's name?", class: "form-control", required: true %>
+            </div>
+            <div class="form-group">
+              <div class="dropdown bootstrap-select form-control">
+                <label for="form_type" class="form-label">Band Type</label>
+                <%= f.select :band_type, [["Solo Act", "Solo Act"], ["Group", "Group"]], {}, {:class => "selectpicker form-control",
+                                                                                              id: "band_type", prompt: "Select...", required: true} %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="dropdown bootstrap-select form-control">
+                <label for="form_type" class="form-label">Primary Band Genre</label>
+                <%= f.select :band_genre, [["Alternative", "Alternative"], ["Americana", "Americana"], ["Blues", "Blues"], ["Christian", "Christian"], ["Classical", "Classical"], ["Comedy", "Comedy"], ["Country", "Country"],
+                                           ["EDM", "EDM"], ["Electronic", "Electronic"], ["Folk", "Folk"], ["Hip Hop", "Hip Hop"], ["Jazz", "Jazz"], ["Latin", "Latin"], ["Metal", "Metal"], ["Pop", "Pop"], ["R+B", "R+B"], ["Blues", "Blues"], ["Rock", "Rock"],
+                                           ["Spoken Word", "Spoken Word"], ["World", "World"]], {}, {:class => "selectpicker form-control",
+                                                                                                     id: "band_genre", prompt: "Select...", required: true} %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="dropdown bootstrap-select form-control">
+                <label for="form_type" class="form-label">Secondary Band Genre</label>
+                <%= f.select :band_sec_genre, [["No Secondary Genre", "No Secondary Genre"], ["Alternative", "Alternative"], ["Americana", "Americana"], ["Blues", "Blues"], ["Christian", "Christian"], ["Classical", "Classical"], ["Comedy", "Comedy"],
+                                               ["Country", "Country"], ["EDM", "EDM"], ["Electronic", "Electronic"], ["Folk", "Folk"], ["Hip Hop", "Hip Hop"], ["Jazz", "Jazz"], ["Latin", "Latin"], ["Metal", "Metal"], ["Pop", "Pop"], ["R+B", "R+B"], ["Blues", "Blues"],
+                                               ["Rock", "Rock"], ["Spoken Word", "Spoken Word"], ["World", "World"]], {}, {:class => "selectpicker form-control",
+                                                                                                                           id: "band_sec_genre", prompt: "Select...", required: true} %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-block">
+          <div class="col-lg-4">
+            <h4>Hometown</h4>
+            <p class="text-muted text-sm">Where is your band from or primarily based out of?</p>
+          </div>
+          <div class="col-lg-7 ml-auto">
+
+            <div class="form-group"></div>
+            <div class="form-group">
+              <label for="form_name" class="form-label">Hometown</label>
+              <%= f.text_field :address, placeholder: "What is your hometown?", class: "form-control", required: true, id: "bandaddress" %>
+              <div class="details">
+                <%= f.hidden_field :latitude,  :"data-geo"=> "lat" %>
+                <%= f.hidden_field :longitude,  :"data-geo"=> "lng" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-block flex-column flex-sm-row">
+          <div class="col text-center text-sm-left">
+          </div>
+          <div class="col text-center text-sm-right">
+            <button class="btn btn-primary px-3" type="submit">Next step<i class="fa-chevron-right fa ml-2"></i>
+            </button>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</section>
+
+
+
+<script>
+    $(function () {
+        $("#bandaddress").geocomplete({
+            details: ".details",
+            detailsAttribute: "data-geo"
+        });
+    })
+</script>

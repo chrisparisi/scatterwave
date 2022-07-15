@@ -1,0 +1,74 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <div class="profile-card card p-4">
+          <div class="border-bottom mb-4 pb-4">
+            <%= image_tag avatar_url(@user) %>
+          </div>
+          <h2 class="h5 text-center mb-0"><%= @user.fullname %></h2>
+          <ul class="sidebar-list text-center mb-0">
+            <% if @user.confirmation_token %>
+                <li class="text-muted mt-4"><i class="fa fa-check-circle-o mr-1"></i>Verified Email Address</li>
+            <% end %>
+            <% if @user.provider %>
+                <li class="text-muted mt-4"><i class="fa fa-check-circle-o  mr-1"></i>Verified Facebook</li>
+            <% end %>
+            <% if @user.phone_verified %>
+                <li class="text-muted mt-4"><i class="fa fa-check-circle-o  mr-1"></i>Phone number Verified</li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="/w">
+          <% if current_user && current_user != @user %>
+              <%= link_to "Send Message", conversations_path(sender_id: current_user.id, recipient_id: @user.id), method: :post, class: "btn btn-default" %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card mb-3">
+          <div class="card-header pt-4 pb-3 px-0 pl-2 mx-2">
+            <h4><%= @user.fullname %></h4></div>
+          <div class="card-body">
+            <div class="no-padding">
+              <%= @user.description if @user.description.present? %>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <h2 class="h6 mb-2 card-header pt-4 pb-3 px-0 mx-4"><%= current_user.present? && @user.id == current_user.id ? "Your Band" : "#{@user.fullname}'s Band" %></h2>
+          <div class="row card-body">
+            <% if @band.blank? %>
+                <div class="m-4">
+                  <h3><%= current_user.present? && @user.id == current_user.id ? "You haven't created a band!" : "#{@user.fullname} haven't created a band!" %></h3></br>
+                  <% if current_user.present? && @user.id == current_user.id %>
+                      <%= link_to "Start a band and book some gigs!", new_band_path, class: "btn btn-primary" %>
+                  <% end %>
+                </div>
+            <% else %>
+                <div class="col-lg-6 col-md-6 col-sm-6 mb-5 hover-animate">
+                  <%= render partial: "bands/band", locals: {band: @band} %>
+                </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <h2 class="h6 mb-2 card-header pt-4 pb-3 px-0 mx-4"><%= current_user.present? && @user.id == current_user.id ? "Your Venues (#{@venues.length})" : "#{@user.fullname}'s Venues (#{@venues.length})" %></h2>
+          <div class="row card-body">
+            <% if @venues.present? %>
+                <%= render partial: "venues/venues_list", locals: {venues: @venues} %>
+                <%#= render partial: "venues/venues", locals: {venues: @venues} %>
+            <% else %>
+                <div class="m-4">
+                  <h3><%= current_user.present? && @user.id == current_user.id ? "You don't have any venue yet!" : "#{@user.fullname} haven't any venue yet!" %></h3></br>
+                  <% if current_user.present? && @user.id == current_user.id %>
+                      <%= link_to "Create venue and host some shows!", new_venue_path, class: "btn btn-primary" %>
+                  <% end %>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

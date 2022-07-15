@@ -1,0 +1,3 @@
+$('#venue_listing').html('<%= j render partial: "venues/venues_list", locals: {venues: @arrVenues} %>')
+refreshMap(<%= raw @arrVenues.to_json %>);
+starRating('.d-star-rating');

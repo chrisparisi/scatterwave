@@ -1,0 +1,36 @@
+<div style="height: 8px;" class="progress rounded-0 sticky-top">
+  <div role="progressbar" style="width:50%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" class="progress-bar"></div>
+</div>
+<section class="py-5">
+  <div class="container">
+    <p class="subtitle text-primary">Add new Band</p>
+    <h1 class="h2 mb-5"> Info <span class="text-muted float-right">Step 3</span></h1>
+    <%= form_for @band do |f| %>
+        <div class="row form-block">
+          <div class="col-lg-4">
+            <h4>Description</h4>
+            <p class="text-muted text-sm">Tell us a little bit about your band! This is a great place to talk about your origins,influences,
+            and/or introduce everybody in the band.</p>
+          </div>
+          <div class="col-lg-7 ml-auto">
+
+            <label for="form_name" class="form-label">Summary</label>
+            <%= f.text_area :summary, rows: 5, placeholder: "Summary of your band", class: "form-control", required: true %>
+
+          </div>
+        </div>
+        <div class="row form-block flex-column flex-sm-row">
+          <div class="col text-center text-sm-left">
+            <%= link_to social_media_band_path, class: "btn btn-link text-muted" do %>
+                <i class="fa-chevron-left fa mr-2"></i>Back
+            <% end %>
+          </div>
+          <div class="col text-center text-sm-right">
+            <button class="btn btn-primary px-3" type="submit">Next step<i class="fa-chevron-right fa ml-2"></i>
+            </button>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</section>
+

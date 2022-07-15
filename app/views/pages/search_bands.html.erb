@@ -1,0 +1,60 @@
+<div id="main">
+  <section class="py-5">
+  <div class="container">
+  <%= simple_form_for @search, :as => :search, url: search_bands_path, method: :get, remote: true do |f| %>
+      <div class="row">
+        <div class="col-xl-4 col-md-6 mb-4">
+          <label for="searchvenuelocation" class="form-label">Location</label>
+          <%= f.text_field :location, placeholder: "Where do you want to find local bands at?", class: "form-control", id: "searchbandlocation" %>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+<!--          <label for="name" class="form-label">name</label>-->
+          <%#= f.text_field :name, placeholder: "Where do you want to find local bands at?", class: "form-control", id: "searchvenuename" %>
+        </div>
+
+        <div class="col-12 pb-4">
+          <div id="moreFilters" class="collapse">
+            <div class="filter-block">
+              <h6 class="mb-3">Hosted Genres</h6>
+              <ul class="list-inline mb-0">
+                <% ["Alternative", "Americana", "Blues", "Christian", "Classical", "Comedy", "Country", "EDM",
+                    "Electronic", "Folk", "Hip Hop", "Jazz", "Latin", "Metal", "Pop", "R+B", "Rock",
+                    "Spoken Word", "World"].each do |g| %>
+                    <li class="list-inline-item">
+                      <div class="custom-control custom-checkbox">
+                        <%= f.check_box :genres, { :multiple => true, id: g.parameterize, class: "custom-control-input" }, g, nil %>
+                        <label for="<%= g.parameterize %>" class="custom-control-label"><%= g %></label>
+                      </div>
+                    </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 mb-4 order-2 order-sm-1">
+          <button type="submit" class="btn btn-primary"> <i class="fas fa-search mr-1"></i>Search                </button>
+        </div>
+        <div class="col-sm-6 mb-4 text-sm-right order-1 order-sm-2">
+          <button type="button" data-toggle="collapse" data-target="#moreFilters" aria-expanded="false" aria-controls="moreFilters" data-expanded-text="Less filters" data-collapsed-text="More filters" class="btn btn-link btn-collapse pl-0 text-secondary">More filters</button>
+        </div>
+      </div>
+  <% end %>
+  <div class="row" id="band_listing">
+    <% @arrBands.each do |band| %>
+        <div class="col-xl-4 col-lg-3 col-md-2 col-sm-6 mb-5 hover-animate">
+          <%= render "bands/band", band: band %>
+        </div>
+    <% end %>
+  </div>
+  </div>
+</section>
+</div>
+  <script>
+    $(function() {
+      debugger;
+      $("#searchbandlocation").geocomplete();
+    })
+  </script>

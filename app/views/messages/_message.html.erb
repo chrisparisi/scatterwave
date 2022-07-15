@@ -1,0 +1,10 @@
+<div class="answer <%= defined?(class_name)? class_name : message.user_id == current_user.id ? 'right' : 'left'%>">
+  <div class="avatar">
+    <%= image_tag avatar_url(message.user), class: "img-circle avatar-medium", alt: '' %>
+  </div>
+  <div class="name"><%= message.user.fullname %></div>
+  <div class="text">
+    <%= message.context %>
+  </div>
+  <div class="time"><%= message.message_time %></div>
+</div>

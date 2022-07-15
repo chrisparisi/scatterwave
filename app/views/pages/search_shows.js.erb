@@ -1,0 +1,2 @@
+$('#show_listing').html('<%= j render partial: "bookings/bookings_list", locals: {bookings: @arrBookings} %>')
+refreshMap(<%= raw @arrBookings.to_json %>);

@@ -1,0 +1,173 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><%= link_to "Edit Profile", edit_user_registration_path, class: "sidebar-link" %></li>
+          <li class="sidebar-item"><%= link_to "Payment Method", payment_method_path, class: "sidebar-link  active" %></li>
+          <!--<li class="sidebar-item"><%= link_to "Payout Method", payout_method_path, class: "sidebar-link" %></li>-->
+          <li class="sidebar-item"><%= link_to "Security", change_password_path, class: "sidebar-link" %></li>
+          <li class="sidebar-item"><%= link_to "Notification Settings", notification_settings_path, class: "sidebar-link" %></li>
+        </ul>
+      </div>
+      <div class="mt-4 col-md-9">
+        <div class="card">
+          <div class="card-body pb-4 px-4 pt-2">
+            <div class="row justify-content-between align-items-center mb-4">
+              <div class="col-md-5 order-md-2 text-md-right mb-3 mb-md-0"></div>
+              <div class="col-md-7 order-md-1">
+                <ul id="pills-tab" role="tablist" class="nav nav-classic nav-borderless px-0">
+                  <li class="nav-item">
+                    <a id="pills-billing-one-tab" data-toggle="pill" href="#pills-billing-one" role="tab" aria-controls="pills-billing-one" aria-selected="true" class="nav-link <%= params[:payout_tab].present? ? '' : 'active' %> payment-tab">Payment</a>
+                  </li>
+                  <li class="nav-item">
+                    <a id="pills-billing-two-tab" data-toggle="pill" href="#pills-billing-two" role="tab" aria-controls="pills-billing-two" aria-selected="false" class="nav-link <%= params[:payout_tab].present? ? 'active' : '' %> payment-tab">Payout</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="pills-tabContent" class="tab-content col-lg-12">
+              <div id="pills-billing-one" role="tabpanel" aria-labelledby="pills-billing-one-tab" class="tab-pane fade <%= params[:payout_tab].present? ? '' : 'active' %> show">
+                <h3 class="h5 mb-0">Payment method</h3>
+                <hr class="mt-2 mb-4">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <div class="panel-body">
+                      <div class="container">
+                        <%= form_tag("/add_card", method: "post", id: "add-card") do %>
+
+
+                            <div class="js-form-message mb-3">
+                              <label class="form-label">Name</label>
+                              <div class="form-group">
+                                <input name="cardholder-name" placeholder="Jane Doe" class="form-control">
+                              </div>
+                            </div>
+                            <!--<label>-->
+                              <!--<span>Name</span>-->
+                              <!--<input name="cardholder-name" class="field" placeholder="Jane Doe"/>-->
+                            <!--</label>-->
+
+                            <!--<label>-->
+                              <!--<span>Card</span>-->
+                              <!--<div id="card-element" class="field"></div>-->
+                            <!--</label>-->
+
+                            <div class="js-form-message mb-3">
+                              <label class="form-label">Card</label>
+                              <div class="form-group">
+                                <div id="card-element" class="form-control"></div>
+                              </div>
+                            </div>
+
+                            <div class="outcome">
+                              <div class="error" role="alert"></div>
+                            </div>
+                            <div class="w-lg-50">
+                              <% if current_user.stripe_id %>
+                                  <button type="submit" , class="btn btn-primary">Update Card</button>
+                              <% else %>
+                                  <button type="submit" , class="btn btn-primary mr-1">Add
+                                    Card
+                                  </button>
+                              <% end %>
+                        <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="pills-billing-two" role="tabpanel" aria-labelledby="pills-billing-two-tab" class="tab-pane <%= params[:payout_tab].present? ? 'active' : '' %> fade show">
+                <div>
+                  <div class="mb-3">
+                    <h2 class="h5 mb-0">Payout Method</h2>
+                  </div>
+                  <hr class="mt-2 mb-4">
+                  <div class="panel-body">
+                    <div class="pb-8 pt-4">
+                      <p>Don't worry, we won't charge a thing to your credit card!<br/>Scatterwave has no monthly subscription or random charges! Create or link your Stripe account so you can either pay bands or recieve payments from venues after performing a succesful show! Only when a band has been paid does Scatterwave collect a small fee from the payout.</p>
+                      <% if current_user.merchant_id.blank? %>
+                          <%= link_to image_tag('stripe_button.png'), stripe_express_path %>
+                      <% else %>
+                          <br/>
+                          <div class="text-center">
+                            <%= link_to "Express Dashboard", @login_link.url, class: "btn btn-primary" %>
+                          </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    $(function () {
+
+        var stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
+        var elements = stripe.elements();
+
+        var card = elements.create('card', {
+            hidePostalCode: true,
+            style: {
+                base: {
+                    iconColor: '#F99A52',
+                    color: '#32315E',
+                    lineHeight: '48px',
+                    fontWeight: 400,
+                    fontFamily: '"Helvetica Neue", "Helvetica", sans-serif',
+                    fontSize: '15px',
+
+                    '::placeholder': {
+                        color: '#CFD7DF',
+                    }
+                },
+            }
+        });
+
+        card.mount('#card-element');
+
+        function setOutcome(result) {
+
+            var errorElement = document.querySelector('.error');
+            errorElement.classList.remove('visible');
+
+            if (result.token) {
+                var form = $('#add-card');
+                form.append($('<input type="hidden" name="stripeToken">').val(result.token.id));
+                form.get(0).submit();
+            } else if (result.error) {
+                errorElement.textContent = result.error.message;
+                errorElement.classList.add('visible');
+            }
+        }
+
+        card.on('change', function (event) {
+            setOutcome(event);
+        });
+
+        $('#add-card').on('submit', function (e) {
+            e.preventDefault();
+            var extraDetails = {
+                name: $('input[name=cardholder-name]').value
+            };
+            stripe.createToken(card, extraDetails).then(setOutcome);
+        });
+
+    });
+</script>
+<style>
+  .active.nav-link.payment-tab  {
+    color: #002776;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 3px solid #002776;
+  }
+</style>
