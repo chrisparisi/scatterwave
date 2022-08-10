@@ -1,10 +1,10 @@
 SCATTERWAVE
 
-My most ambitious project I ever undertook. Started off as a senior project that I attempted to turn into a full business. Scatterwave's mission was to provide a booking platform for bands and venues and then to promote them to people in the area as well as proividng music samples of the artists.
+My most ambitious project I ever undertook. Started off as a senior project that I attempted to turn into a full business. Scatterwave's mission was to provide a booking platform for bands and venues and then to promote them to people in the area. I did countless interviews with bands and venues to make sure the feastures being built were the ones that clients cared about and implemented in the most streamlined and intuitive ways.
 
-I built the MVP using Ruby on Rails, before working with a team of other developers to get the project production ready. Suspended operations at the beginning of COVID-19.
+I built the MVP using Ruby on Rails, before working with a team of 5 developers to get the project production ready. Suspended operations indefinitely at the beginning of COVID-19.
 
-This project has a messaging service, a calender booking component, geolocation data to display locations of venues as well as ones that are in close proximity.
+This project has a messaging service, a calender booking component, geolocation data to display locations of venues as well as ones that are in close proximity. It uses Amazon S3 for photo storage, Stripe for payments, Mailgun for emails, Twilio for texting, and deployed on Heroku.
 
 # README
 
